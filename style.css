@@ -1,0 +1,253 @@
+   /* <style> */
+      :root {
+        --color-black: #111;
+        --color-white: #ffffff;
+        --color-primary: #10b981;
+        --pill-left: 0;
+        --pill-right: 0;
+      }
+
+      body {
+        overflow-x: hidden;
+      }
+      .allura {
+        font-family: "Allura", cursive;
+      }
+
+      @font-face {
+        font-family: "mazius";
+        src: url("mazius_display/MaziusDisplay/Mazius\ Display\ Extraitalic.otf")
+          format("opentype");
+      }
+
+      @font-face {
+        font-family: "gilroy-bold";
+        src: url("gilroy-bold/Gilroy-Bold.ttf") format("opentype");
+      }
+      @font-face {
+        font-family: "gilroy";
+        src: url("gilroy-bold/Gilroy-Medium.ttf") format("opentype");
+      }
+
+      .mazius {
+        font-family: "mazius";
+      }
+
+      .gilroy-bold {
+        font-family: "gilroy-bold";
+      }
+
+      .gilroy {
+        font-family: "gilroy";
+      }
+
+      .bg-primary {
+        background-color: var(--color-primary) !important;
+      }
+
+      .text-primary {
+        color: var(--color-primary) !important;
+      }
+
+      /* Lenis Setup */
+      html.lenis,
+      html.lenis body {
+        height: auto;
+      }
+
+      .lenis.lenis-smooth {
+        scroll-behavior: auto;
+      }
+
+      .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+
+      .lenis.lenis-scrolling iframe {
+        pointer-events: none;
+      }
+
+      :root {
+        --pill-left: 0px;
+        --pill-right: 0px;
+      }
+
+      #track3::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: var(--pill-left);
+        right: var(--pill-right);
+        background-color: black;
+        border-radius: 50px;
+        transition: all 0.25s ease-in-out;
+        z-index: 0;
+        height: 50px;
+        border: 3px solid #fff;
+      }
+
+      #track3 .pill.active {
+        color: white;
+        font-weight: 600;
+      }
+
+      .tab-pane {
+        display: none;
+      }
+
+      .tab-pane.active {
+        display: block;
+      }
+
+      /* Horizontal Scroll Section Styles */
+      .horizontal-container {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .horizontal-scroller {
+        display: flex;
+        height: 100vh;
+        width: max-content;
+      }
+
+      .horizontal-section {
+        flex: 0 0 100vw;
+        height: 100vh;
+      }
+
+      /* Mobile optimization */
+      @media (max-width: 768px) {
+        .horizontal-container h1 {
+          font-size: 14vw;
+        }
+
+        .horizontal-container h2 {
+          font-size: 1.5rem;
+        }
+
+        .progress-counter {
+          font-size: 8rem;
+          bottom: 1rem;
+          right: 1rem;
+        }
+      }
+
+      .horizontal-intro,
+      .horizontal-hero-img,
+      .horizontal-about,
+      .horizontal-banner-img,
+      .horizontal-story,
+      .horizontal-outro {
+        width: 90vw;
+      }
+
+      .horizontal-header,
+      .horizontal-concept-img {
+        width: 100vw;
+      }
+
+      .horizontal-intro {
+        padding: 2rem;
+        background-color: #000;
+        color: #f6f6f6;
+      }
+
+      .horizontal-header {
+        padding: 2rem;
+        background-color: #f4d35e;
+        color: #421c06;
+      }
+
+      .horizontal-about {
+        padding: 4rem 3rem 1rem 2rem;
+        background-color: #f95738;
+        color: #481107;
+      }
+
+      .horizontal-story {
+        padding: 4rem 2rem 2rem 2rem;
+        background-color: #ee964b;
+        color: #3f170b;
+      }
+
+      .horizontal-outro {
+        background-color: #ebebd3;
+        color: #302418;
+        padding: 2rem;
+      }
+
+      .horizontal-about .row {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .horizontal-about .row p {
+        width: 50%;
+        margin-bottom: 1rem;
+      }
+
+      .horizontal-about .row .copy {
+        flex: 3;
+      }
+
+      .horizontal-about .row .img {
+        flex: 3;
+        aspect-ratio: 7/5;
+        overflow: hidden;
+      }
+
+      .horizontal-about .row .img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Typography for horizontal section */
+      .horizontal-container h1 {
+        font-family: "Anton", sans-serif;
+        font-size: 10vw;
+        font-weight: 400;
+        text-transform: uppercase;
+        line-height: 1;
+        letter-spacing: -2px;
+        padding-top: 0.25rem;
+      }
+
+      .horizontal-container h2 {
+        font-family: "Poppins", sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+
+      .horizontal-container p {
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .horizontal-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Progress Counter */
+      .progress-counter {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        color: white;
+        font-family: "Anton", sans-serif;
+        font-size: 3rem;
+        z-index: 100;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+        pointer-events: none;
+      }
+    /* </style> */
