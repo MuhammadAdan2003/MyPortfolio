@@ -27,9 +27,8 @@
       href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
       rel="stylesheet"
     />
-     
-    <link rel="stylesheet" href="style.css">
- 
+
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body class="bg-gray-50">
     <!-- Your existing content -->
@@ -45,8 +44,6 @@
       </div>
     </div>
 
-    
-
     <!-- Hero Section -->
     <div
       class="hero h-screen relative overflow-hidden sticky top-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px), linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px]"
@@ -56,7 +53,7 @@
         <div
           class="absolute bottom-[0%] hidden lg:right-[2%] lg:top-[20%] lg:w-[30%] lg:block"
         >
-          <h3 class="text-2xl mazius text-primary">Creative Developer Vibe</h3>
+          <h3 class="text-4xl mazius text-primary">Creative Developer Vibe</h3>
           <p class="text-xl gilroy">
             For me, development is more than writing code it's about creating
             experiences. I love transforming ideas into interactive, responsive,
@@ -141,7 +138,8 @@
             <div class="tab-pane active" id="all-content">
               <div class="">
                 <div class="text-white gilroy text-md lg:text-lg">
-                  I am a web application developer with nearly two years of
+                  <p>
+                    I am a web application developer with nearly two years of
                   professional experience building modern, scalable, and
                   user-focused web applications. I enjoy working across the full
                   development lifecycle, from planning and designing interfaces
@@ -151,15 +149,17 @@
                   regularly work with HTML, CSS, and JavaScript to create
                   responsive layouts and interactive experiences, and I use GSAP
                   to add smooth animations that enhance usability. I also build
-                  dynamic and component-based interfaces using React. On the
+                  dynamic and component based interfaces using React. On the
                   backend, I develop robust applications with PHP and Laravel,
                   handling authentication, business logic, and APIs, while using
                   MySQL to design and manage reliable databases. I continuously
                   improve my skills by learning new techniques, following best
-                  practices, and delivering high-quality solutions. <br />
-                  Beyond technical implementation, I place strong emphasis on
+                  practices, and delivering high-quality solutions.
+                  </p class="mt-1"> <br />
+                  <p>
+                    Beyond technical implementation, I place strong emphasis on
                   understanding user needs and translating ideas into practical,
-                  well-structured solutions. I enjoy breaking down complex
+                  well structured solutions. I enjoy breaking down complex
                   requirements into manageable components and ensuring each
                   feature aligns with both business goals and user expectations.
                   Collaboration is an important part of my workflow, and I am
@@ -168,6 +168,7 @@
                   focus on building applications that are not only functional
                   but also intuitive, accessible, and visually consistent across
                   devices and platforms.
+                  </p>
                 </div>
               </div>
             </div>
@@ -175,7 +176,7 @@
             <div class="tab-pane hidden" id="casual-content">
               <div class="">
                 <div class="text-white gilroy text-md lg:text-lg">
-                  Outside of my professional work, I dedicate time to activities
+                 <p> Outside of my professional work, I dedicate time to activities
                   that help me grow creatively and mentally. I enjoy playing
                   video games, which has strengthened my problem-solving
                   abilities, strategic thinking, and patience over time. Gaming
@@ -189,8 +190,8 @@
                   tools, refining my techniques, and pushing my limits. I
                   believe maintaining a balance between work, learning, and
                   personal interests keeps me motivated, focused, and
-                  continuously improving. <br />
-                  Beyond my work life, I value experiences that keep my mind
+                  continuously improving.</p> <br />
+                  <p class="mt-1">Beyond my work life, I value experiences that keep my mind
                   active and creative. I often spend time gaming, not just for
                   entertainment but for the way it challenges my
                   decision-making, focus, and adaptability in fast-paced
@@ -203,7 +204,7 @@
                   technologies out of pure curiosity. This mix of creative
                   outlets and continuous learning helps me stay balanced,
                   motivated, and passionate about growth both personally and
-                  professionally.
+                  professionally.</p>
                 </div>
               </div>
             </div>
@@ -215,7 +216,9 @@
     <!-- Horizontal Scroll Section -->
     <div class="horizontal-container relative">
       <!-- Progress Counter -->
-    <div class="progress-counter gilroy absolute"><span id="counter">0</span  >%</div>
+      <div class="progress-counter font-bold gilroy absolute">
+        <span id="counter">0</span>%
+      </div>
       <div class="horizontal-scroller">
         <!-- 1 -->
         <section class="horizontal-section horizontal-intro">
@@ -298,7 +301,10 @@
     </div>
 
     <!-- Black section after horizontal scroll -->
-    <div class="h-screen bg-black flex items-center justify-center" style="z-index: 100000;">
+    <!-- <div
+      class="h-screen bg-black flex items-center justify-center"
+      style="z-index: 100000"
+    >
       <div class="text-white text-center px-4">
         <h2 class="text-4xl font-bold mb-4">
           Next Section After Horizontal Scroll
@@ -307,8 +313,214 @@
           Vertical scrolling continues normally after horizontal section.
         </p>
       </div>
-    </div>
+    </div> -->
 
-   <script src="script.js"></script>
+    <!-- =============== cards section ===============  -->
+
+    <div class="page-wrap bg-black relative w-100 h-screen"  style="z-index: 1000;">
+      <!-- Section to hold post sliders -->
+      <section class="post-sliders">
+        <!-- Heading for the section -->
+        <h2 class="section-heading text-white">Collections</h2>
+
+        <!-- Main post slider container -->
+        <div class="post-slider rounded-xl">
+          <!-- Header card (title and sponsor information) -->
+          <!-- <div class="post-slider-header header-card">
+            <h2 class="header-card-title">Classic Tricks</h2>
+            <p class="header-card-sponsor">Timeless CSS gems</p>
+          </div> -->
+
+          <!-- Grid layout for mini cards (articles) -->
+          <div class="mini-card-grid">
+            <article class="mini-card">
+              <time>
+                <strong> Article </strong>
+                on Oct 6, 2021
+              </time>
+
+              <h3 class="mini-card-title">Advanced CSS Flexbox</h3>
+
+              <!-- Short description of the article -->
+              <div class="mini-card-description">
+                Master flexbox with advanced techniques and layouts for
+                responsive web design.
+              </div>
+
+              <!-- Author information for the article -->
+              <div class="author-row">
+                <!-- Author avatar -->
+                <div>
+                  <img
+                    alt=""
+                    src="https://avatar.iran.liara.run/public/14"
+                    class="avatar"
+                  />
+                </div>
+
+                <!-- Link to author profile -->
+                <a class="author-name" href="#"> Sam Winters </a>
+              </div>
+            </article>  
+
+            <article class="mini-card">
+              <time>
+                <strong> Article </strong>
+                on Oct 6, 2021
+              </time>
+
+              <h3 class="mini-card-title">Advanced CSS Flexbox</h3>
+
+              <div class="mini-card-description">
+                Master flexbox with advanced techniques and layouts for
+                responsive web design.
+              </div>
+
+              <div class="author-row">
+                <!-- Author avatar -->
+                <div>
+                  <img
+                    alt=""
+                    src="https://avatar.iran.liara.run/public/14"
+                    class="avatar"
+                  />
+                </div>
+
+                <a class="author-name" href="#"> Sam Winters </a>
+              </div>
+            </article>  
+
+            <article class="mini-card">
+              <time>
+                <strong> Article </strong>
+                on Oct 10, 2021
+              </time>
+
+              <h3 class="mini-card-title">Understanding CSS Grid</h3>
+
+              <div class="mini-card-description">
+                A complete guide to CSS Grid layout, with practical examples for
+                grid-based designs.
+              </div>
+
+              <div class="author-row">
+                <div>
+                  <img
+                    alt=""
+                    src="https://avatar.iran.liara.run/public/27"
+                    class="avatar"
+                  />
+                </div>
+                <a class="author-name" href="#"> Sarah Lopez </a>
+              </div>
+            </article>
+
+            <article class="mini-card">
+              <time>
+                <strong> Article </strong>
+                on Nov 2, 2021
+              </time>
+
+              <h3 class="mini-card-title">Creating Animations with CSS</h3>
+
+              <div class="mini-card-description">
+                Learn how to bring your web pages to life with keyframe
+                animations in CSS.
+              </div>
+
+              <div class="author-row">
+                <div>
+                  <img
+                    alt=""
+                    src="https://avatar.iran.liara.run/public/12"
+                    class="avatar"
+                  />
+                </div>
+                <a class="author-name" href="#"> Daniel Clarkson </a>
+              </div>
+            </article>
+
+            <article class="mini-card">
+              <time>
+                <strong> Article </strong>
+                on Dec 15, 2021
+              </time>
+
+              <h3 class="mini-card-title">Dark Mode with CSS Variables</h3>
+
+              <div class="mini-card-description">
+                Implement dark mode for your website using CSS custom properties
+                and variables.
+              </div>
+
+              <div class="author-row">
+                <div>
+                  <img
+                    alt=""
+                    src="https://avatar.iran.liara.run/public/36"
+                    class="avatar"
+                  />
+                </div>
+                <a class="author-name" href="#"> Olivia Stevens </a>
+              </div>
+            </article>
+
+            <article class="mini-card">
+              <time>
+                <strong> Article </strong>
+                on Jan 5, 2022
+              </time>
+
+              <h3 class="mini-card-title">Responsive Web Design Basics</h3>
+              
+              <div class="mini-card-description">
+                An introduction to responsive design, with media queries and
+                fluid layouts.
+              </div>
+
+              <div class="author-row">
+                <div>
+                  <img
+                    alt=""
+                    src="https://avatar.iran.liara.run/public/18"
+                    class="avatar"
+                  />
+                </div>
+                <a class="author-name" href="#"> Emily Rogers </a>
+              </div>
+            </article>
+
+            <article class="mini-card">
+              <time>
+                <strong> Article </strong>
+                on Feb 22, 2022
+              </time>
+
+              <h3 class="mini-card-title">Advanced Selectors in CSS</h3>
+
+              <div class="mini-card-description">
+                Discover powerful CSS selectors and how to use them in your
+                stylesheets.
+              </div>
+              <div class="author-row">
+                <div>
+                  <img
+                    alt=""
+                    src="https://avatar.iran.liara.run/public/14"
+                    class="avatar"
+                  />
+                </div>
+                <a class="author-name" href="#"> James Foster </a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="h-screen bg-white relative z-50">
+      <h1 class="mazius text-primary text-8xl p-5">My Skill Set</h1>
+      <!-- <p class="gilroy text-center">A balanced mix of frontend and backend technologies that helps me build modern, efficient, and scalable web applications with attention to performance and user experience.</p> -->
+    </div>
+    <script src="script.js"></script>
   </body>
 </html>
