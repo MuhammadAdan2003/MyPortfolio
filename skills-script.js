@@ -20,7 +20,7 @@ const circleTexts = [
   "BOOTSTRAP",
   "UI/UX",
   "APIs",
-  "Third API",
+  "Third Party API",
   "Animations",
 ];
 

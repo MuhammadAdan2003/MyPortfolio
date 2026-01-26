@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultra Shiny Glass Cards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* * {
+        font-family: "Inter", sans-serif;
+      } */
+
+      :root {
+        --color-black: #111;
+        --color-white: #ffffff;
+        --color-primary: #10b981;
+        --pill-left: 0;
+        --pill-right: 0;
+      }
+
+      body {
+        overflow-x: hidden;
+      }
+      .allura {
+        font-family: "Allura", cursive;
+      }
+
+      @font-face {
+        font-family: "mazius";
+        src: url("mazius_display/MaziusDisplay/Mazius\ Display\ Extraitalic.otf")
+          format("opentype");
+      }
+
+      @font-face {
+        font-family: "gilroy-bold";
+        src: url("gilroy-bold/Gilroy-Bold.ttf") format("opentype");
+      }
+      @font-face {
+        font-family: "gilroy";
+        src: url("gilroy-bold/Gilroy-Medium.ttf") format("opentype");
+      }
+
+      .mazius {
+        font-family: "mazius";
+      }
+
+      .gilroy-bold {
+        font-family: "gilroy-bold";
+      }
+
+      .gilroy {
+        font-family: "gilroy";
+      }
+
+      .bg-primary {
+        background-color: var(--color-primary) !important;
+      }
+
+      .text-primary {
+        color: var(--color-primary) !important;
+      }
+
+      body {
+        background: #000000;
+        min-height: 100vh;
+        background-image:
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(255, 255, 255, 0.05) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 255, 255, 0.03) 0%,
+            transparent 40%
+          );
+      }
+
+      /* Ultra Shiny Glass Card - ALWAYS SHINY */
+      .ultra-shiny-glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow:
+          0 15px 35px rgba(0, 0, 0, 0.8),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+          0 0 40px rgba(255, 255, 255, 0.05);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      /* Permanent shine effect (always visible) */
+      .ultra-shiny-glass::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          125deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.1) 50%,
+          transparent 70%
+        );
+        opacity: 0.3;
+        animation: permanentShine 3s ease-in-out infinite;
+      }
+
+      @keyframes permanentShine {
+        0%,
+        100% {
+          transform: translateX(-100%);
+        }
+        50% {
+          transform: translateX(100%);
+        }
+      }
+
+      /* Secondary shine layer */
+      .ultra-shiny-glass::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 30% 20%,
+          rgba(255, 255, 255, 0.15) 0%,
+          transparent 50%
+        );
+        opacity: 0.2;
+      }
+
+      /* HOVER EFFECT - EXTRA SHINE */
+      .ultra-shiny-glass:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        box-shadow:
+          0 25px 50px rgba(0, 0, 0, 1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+          0 0 60px rgba(255, 255, 255, 0.1),
+          0 0 20px rgba(255, 255, 255, 0.2);
+        transform: translateY(-8px) scale(1.02);
+      }
+
+      /* Extra shine effect on hover */
+      .ultra-shiny-glass:hover::before {
+        opacity: 0.5;
+        animation: hoverShine 1.5s ease-in-out infinite;
+        background: linear-gradient(
+          125deg,
+          transparent 20%,
+          rgba(255, 255, 255, 0.25) 50%,
+          transparent 80%
+        );
+      }
+
+      @keyframes hoverShine {
+        0%,
+        100% {
+          transform: translateX(-100%);
+        }
+        50% {
+          transform: translateX(100%);
+        }
+      }
+
+      .ultra-shiny-glass:hover::after {
+        opacity: 0.4;
+        background: radial-gradient(
+          circle at 70% 80%,
+          rgba(255, 255, 255, 0.25) 0%,
+          transparent 60%
+        );
+      }
+
+      /* Text colors */
+      .text-white-shiny {
+        color: rgba(255, 255, 255, 0.95);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .text-gray-shiny {
+        color: rgba(255, 255, 255, 0.8);
+        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .text-light-shiny {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Shiny divider */
+      .divider-shiny {
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+      }
+
+      /* Ultra shiny stars */
+      .star-shiny {
+        color: rgba(255, 255, 255, 0.95);
+        text-shadow:
+          0 0 10px rgba(255, 255, 255, 0.5),
+          0 0 20px rgba(255, 255, 255, 0.3),
+          0 0 30px rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .ultra-shiny-glass:hover .star-shiny {
+        text-shadow:
+          0 0 15px rgba(255, 255, 255, 0.8),
+          0 0 30px rgba(255, 255, 255, 0.5),
+          0 0 45px rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+      }
+
+      /* Profile image glow */
+      .profile-glow {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow:
+          0 0 15px rgba(255, 255, 255, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+
+      .ultra-shiny-glass:hover .profile-glow {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow:
+          0 0 25px rgba(255, 255, 255, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      }
+
+      /* Tag shine */
+      .tag-shiny {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        box-shadow:
+          0 2px 8px rgba(0, 0, 0, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .ultra-shiny-glass:hover .tag-shiny {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow:
+          0 3px 12px rgba(0, 0, 0, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+
+      /* Fade in with shine */
+      @keyframes shineFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+          filter: blur(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+          filter: blur(0);
+        }
+      }
+
+      .shine-fade-in {
+        animation: shineFadeIn 0.8s ease forwards;
+        opacity: 0;
+      }
+
+      .delay-1 {
+        animation-delay: 0.1s;
+      }
+      .delay-2 {
+        animation-delay: 0.2s;
+      }
+      .delay-3 {
+        animation-delay: 0.3s;
+      }
+      .delay-4 {
+        animation-delay: 0.4s;
+      }
+      .delay-5 {
+        animation-delay: 0.5s;
+      }
+      .delay-6 {
+        animation-delay: 0.6s;
+      }
+
+      /* Shimmering stats */
+      .stat-shiny {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stat-shiny::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+        animation: statShimmer 3s ease-in-out infinite;
+      }
+
+      @keyframes statShimmer {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 200%;
+        }
+      }
+    </style>
+  </head>
+  <body class="flex items-center justify-center p-4 md:p-8">
+    <div class="max-w-6xl mx-auto w-full">
+      <!-- Shiny Header -->
+      <div class="text-center mb-16 shine-fade-in">
+        <h1 class="text-5xl font-bold text-white-shiny mb-4">Testimonials</h1>
+        <p class="text-gray-shiny text-lg">
+          Ultra shiny black glass cards with permanent shine
+        </p>
+      </div>
+
+      <!-- Shiny Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="ultra-shiny-glass rounded-2xl p-8 shine-fade-in delay-1">
+          <div class="flex items-center mb-6">
+            <div
+              class="w-16 h-16 rounded-full overflow-hidden profile-glow mr-5"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1494790108755-2616b786d4d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                alt="Alex Chen"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white-shiny">Alex Chen</h3>
+              <p class="text-gray-shiny text-sm">Product Manager</p>
+              <!-- <div class="flex mt-2">
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+              </div> -->
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <p class="text-white-shiny text-base">
+              "Exceptional work with stunning attention to detail. The team
+              delivered beyond all expectations with remarkable precision."
+            </p>
+          </div>
+
+          <div class="pt-5 border-t divider-shiny">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-gray-shiny text-sm">Web Development</span>
+              <span class="text-light-shiny text-xs">May 2023</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >React</span
+              >
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >UI/UX</span
+              >
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >API</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="ultra-shiny-glass rounded-2xl p-8 shine-fade-in delay-2">
+          <div class="flex items-center mb-6">
+            <div
+              class="w-16 h-16 rounded-full overflow-hidden profile-glow mr-5"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                alt="Marcus Lee"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white-shiny">Marcus Lee</h3>
+              <p class="text-gray-shiny text-sm">Startup Founder</p>
+              <div class="flex mt-2">
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star-half-alt star-shiny"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <p class="text-white-shiny text-base">
+              "Outstanding results delivered ahead of schedule. The team's
+              communication was crystal clear throughout the entire project."
+            </p>
+          </div>
+
+          <div class="pt-5 border-t divider-shiny">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-gray-shiny text-sm">Mobile App</span>
+              <span class="text-light-shiny text-xs">Mar 2023</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >iOS</span
+              >
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >Android</span
+              >
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >Flutter</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="ultra-shiny-glass rounded-2xl p-8 shine-fade-in delay-3">
+          <div class="flex items-center mb-6">
+            <div
+              class="w-16 h-16 rounded-full overflow-hidden profile-glow mr-5"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                alt="Sarah Miller"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white-shiny">Sarah Miller</h3>
+              <p class="text-gray-shiny text-sm">Creative Director</p>
+              <div class="flex mt-2">
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <p class="text-white-shiny text-base">
+              "Transformed our vision into a breathtaking digital masterpiece.
+              Their attention to visual detail was absolutely remarkable."
+            </p>
+          </div>
+
+          <div class="pt-5 border-t divider-shiny">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-gray-shiny text-sm">Brand Design</span>
+              <span class="text-light-shiny text-xs">Jan 2023</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >Branding</span
+              >
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >UI/UX</span
+              >
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >Graphics</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="ultra-shiny-glass rounded-2xl p-8 shine-fade-in delay-4">
+          <div class="flex items-center mb-6">
+            <div
+              class="w-16 h-16 rounded-full overflow-hidden profile-glow mr-5"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                alt="David Park"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white-shiny">David Park</h3>
+              <p class="text-gray-shiny text-sm">Tech Lead</p>
+              <div class="flex mt-2">
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="far fa-star star-shiny"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <p class="text-white-shiny text-base">
+              "Technical brilliance with crystal-clear communication. Complex
+              architectural decisions were explained with perfect clarity."
+            </p>
+          </div>
+
+          <div class="pt-5 border-t divider-shiny">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-gray-shiny text-sm">System Architecture</span>
+              <span class="text-light-shiny text-xs">Dec 2022</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >Architecture</span
+              >
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >Cloud</span
+              >
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >DevOps</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="ultra-shiny-glass rounded-2xl p-8 shine-fade-in delay-5">
+          <div class="flex items-center mb-6">
+            <div
+              class="w-16 h-16 rounded-full overflow-hidden profile-glow mr-5"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                alt="Lisa Johnson"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white-shiny">Lisa Johnson</h3>
+              <p class="text-gray-shiny text-sm">Marketing Head</p>
+              <div class="flex mt-2">
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <p class="text-white-shiny text-base">
+              "Exceeded all expectations with a perfect balance of creative
+              vision and technical execution. The results were spectacular."
+            </p>
+          </div>
+
+          <div class="pt-5 border-t divider-shiny">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-gray-shiny text-sm">Campaign Design</span>
+              <span class="text-light-shiny text-xs">Nov 2022</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >Marketing</span
+              >
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >Design</span
+              >
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >Analytics</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="ultra-shiny-glass rounded-2xl p-8 shine-fade-in delay-6">
+          <div class="flex items-center mb-6">
+            <div
+              class="w-16 h-16 rounded-full overflow-hidden profile-glow mr-5"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                alt="Michael Tan"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white-shiny">Michael Tan</h3>
+              <p class="text-gray-shiny text-sm">CTO</p>
+              <div class="flex mt-2">
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star star-shiny"></i>
+                <i class="fas fa-star-half-alt star-shiny"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <p class="text-white-shiny text-base">
+              "Architected a scalable, high-performance solution with impeccable
+              documentation. Technical expertise was truly impressive."
+            </p>
+          </div>
+
+          <div class="pt-5 border-t divider-shiny">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-gray-shiny text-sm">Cloud Migration</span>
+              <span class="text-light-shiny text-xs">Oct 2022</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >AWS</span
+              >
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >Migration</span
+              >
+              <span
+                class="tag-shiny px-3 py-1 rounded-full text-light-shiny text-xs"
+                >Security</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shiny Stats -->
+      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div
+          class="ultra-shiny-glass rounded-xl p-6 text-center stat-shiny shine-fade-in"
+        >
+          <div class="text-3xl font-bold text-white-shiny mb-2">4.9</div>
+          <div class="text-light-shiny text-sm">Average Rating</div>
+        </div>
+        <div
+          class="ultra-shiny-glass rounded-xl p-6 text-center stat-shiny shine-fade-in delay-1"
+        >
+          <div class="text-3xl font-bold text-white-shiny mb-2">150+</div>
+          <div class="text-light-shiny text-sm">Projects Completed</div>
+        </div>
+        <div
+          class="ultra-shiny-glass rounded-xl p-6 text-center stat-shiny shine-fade-in delay-2"
+        >
+          <div class="text-3xl font-bold text-white-shiny mb-2">99%</div>
+          <div class="text-light-shiny text-sm">Client Satisfaction</div>
+        </div>
+        <div
+          class="ultra-shiny-glass rounded-xl p-6 text-center stat-shiny shine-fade-in delay-3"
+        >
+          <div class="text-3xl font-bold text-white-shiny mb-2">24/7</div>
+          <div class="text-light-shiny text-sm">Support Available</div>
+        </div>
+      </div>
+
+      <!-- Shiny Footer -->
+      <div class="mt-12 text-center">
+        <p class="text-light-shiny text-sm">
+          Cards have permanent shine effect • Hover for extra shine
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // Add extra shine on click
+      const cards = document.querySelectorAll(".ultra-shiny-glass");
+
+      cards.forEach((card) => {
+        card.addEventListener("click", function () {
+          // Create click shine effect
+          const clickShine = document.createElement("div");
+          clickShine.style.position = "absolute";
+          clickShine.style.top = "0";
+          clickShine.style.left = "0";
+          clickShine.style.width = "100%";
+          clickShine.style.height = "100%";
+          clickShine.style.background =
+            "radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 70%)";
+          clickShine.style.zIndex = "2";
+          clickShine.style.animation = "fadeOut 0.8s ease forwards";
+
+          this.appendChild(clickShine);
+
+          // Remove after animation
+          setTimeout(() => {
+            clickShine.remove();
+          }, 800);
+        });
+      });
+
+      // Add CSS for click animation
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes fadeOut {
+                0% { opacity: 1; }
+                100% { opacity: 0; }
+            }
+        `;
+      document.head.appendChild(style);
+
+      // Randomize shine animation speeds
+      cards.forEach((card, index) => {
+        const randomSpeed = 2 + Math.random() * 2;
+        card.style.setProperty("--shine-speed", `${randomSpeed}s`);
+
+        // Apply random speed to permanent shine
+        const beforeElement = card.querySelector("::before");
+        if (beforeElement) {
+          beforeElement.style.animationDuration = `${randomSpeed}s`;
+        }
+      });
+    </script>
+  </body>
+</html>

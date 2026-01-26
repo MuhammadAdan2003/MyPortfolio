@@ -1,12 +1,77 @@
 // ============ BARBA JS ================ //
 // Barba.js Initialization
+// barba.init({
+//   transitions: [
+//     {
+//       name: "smooth-slide-top-transition",
+
+//       async leave(data) {
+//         // Create sliding overlay
+//         const overlay = document.createElement("div");
+//         overlay.className = "transition-overlay";
+//         overlay.style.cssText = `
+//           position: fixed;
+//           top: -100%;
+//           left: 0;
+//           width: 100%;
+//           height: 100%;
+//           background: #000;
+//           z-index: 9999;
+//           transform-origin: top center;
+//         `;
+//         document.body.appendChild(overlay);
+
+//         // Slide down to cover page
+//         await gsap.to(overlay, {
+//           top: "0%",
+//           duration: 0.7,
+//           ease: "power3.in",
+//         });
+
+//         // Immediately start collapsing
+//         await gsap.to(overlay, {
+//           height: "0%",
+//           duration: 0.7,
+//           ease: "power3.out",
+//         });
+
+//         // Remove old page
+//         data.current.container.remove();
+
+//         return overlay;
+//       },
+
+//       async enter(data) {
+//         // Remove overlay
+//         const overlay = document.querySelector(".transition-overlay");
+//         if (overlay) {
+//           overlay.remove();
+//         }
+
+//         // Animate new page in
+//         data.next.container.style.opacity = "0";
+//         data.next.container.style.transform = "translateY(20px)";
+        
+//         await gsap.to(data.next.container, {
+//           opacity: 1,
+//           y: 0,
+//           duration: 1.0,
+//           ease: "power3.out",
+//         });
+//       },
+
+//       sync: false,
+//     },
+//   ],
+// });
+
 barba.init({
   transitions: [
     {
-      name: "expand-only-transition",
+      name: "instant-cover-transition",
 
       async leave(data) {
-        // Create overlay
+        // IMMEDIATELY create and show overlay (no delay)
         const overlay = document.createElement("div");
         overlay.className = "transition-overlay";
         overlay.style.cssText = `
@@ -14,42 +79,45 @@ barba.init({
           top: 0;
           left: 0;
           width: 100%;
-          height: 100%;
+          height: 0; /* Start with 0 height */
           background: #000;
           z-index: 9999;
-          border-radius: 50%;
-          transform: scale(0);
-          transform-origin: center;
+          overflow: hidden;
         `;
         document.body.appendChild(overlay);
 
-        // Expand overlay
+        // IMMEDIATELY expand to cover screen (no old page visible)
         await gsap.to(overlay, {
-          scale: 3,
-          borderRadius: "0%",
-          duration: 1.5,
-          ease: "power3.inOut",
+          height: "100%",
+          duration: 0.5,
+          ease: "power2.out",
         });
 
-        // Remove old page
+        // Now remove old page (already covered by overlay)
         data.current.container.remove();
+
+        // Continue sliding down
+        await gsap.to(overlay, {
+          top: "100%",
+          duration: 0.5,
+          ease: "power2.in",
+        });
 
         return overlay;
       },
 
       async enter(data) {
-        // Remove overlay instantly
+        // Remove overlay
         const overlay = document.querySelector(".transition-overlay");
         if (overlay) {
-          overlay.style.opacity = "0";
           overlay.remove();
         }
 
-        // Fade in new page
+        // Show new page
         data.next.container.style.opacity = "0";
         await gsap.to(data.next.container, {
           opacity: 1,
-          duration: 1.2,
+          duration: 0.6,
           ease: "power2.out",
         });
       },
@@ -58,7 +126,6 @@ barba.init({
     },
   ],
 });
-
 // After every page change
 // barba.hooks.after(() => {
 //   updateActiveNav();
@@ -179,7 +246,7 @@ function initHorizontalScroll() {
   });
 }
 
-// Complete signature animation with stroke and fill drawing simultaneously
+// Complete signature animation with stroke and fill drawing 
 gsap.fromTo("#svgGroup path", 
     {
         // Initial state - invisible
