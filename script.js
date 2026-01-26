@@ -1,3 +1,69 @@
+// ============ BARBA JS ================ //
+// Barba.js Initialization
+barba.init({
+  transitions: [
+    {
+      name: "expand-only-transition",
+
+      async leave(data) {
+        // Create overlay
+        const overlay = document.createElement("div");
+        overlay.className = "transition-overlay";
+        overlay.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: #000;
+          z-index: 9999;
+          border-radius: 50%;
+          transform: scale(0);
+          transform-origin: center;
+        `;
+        document.body.appendChild(overlay);
+
+        // Expand overlay
+        await gsap.to(overlay, {
+          scale: 3,
+          borderRadius: "0%",
+          duration: 1.5,
+          ease: "power3.inOut",
+        });
+
+        // Remove old page
+        data.current.container.remove();
+
+        return overlay;
+      },
+
+      async enter(data) {
+        // Remove overlay instantly
+        const overlay = document.querySelector(".transition-overlay");
+        if (overlay) {
+          overlay.style.opacity = "0";
+          overlay.remove();
+        }
+
+        // Fade in new page
+        data.next.container.style.opacity = "0";
+        await gsap.to(data.next.container, {
+          opacity: 1,
+          duration: 1.2,
+          ease: "power2.out",
+        });
+      },
+
+      sync: false,
+    },
+  ],
+});
+
+// After every page change
+// barba.hooks.after(() => {
+//   updateActiveNav();
+// });
+
 /*********************************
  * REGISTER GSAP
  *********************************/
@@ -101,14 +167,14 @@ function initHorizontalScroll() {
       },
 
       // 🔥 mobile premium snapping
-      snap: {
-        snapTo:
-          1 /
-          (document.querySelectorAlls =
-            document.querySelectorAll(".horizontal-section").length - 1),
-        duration: 0.4,
-        ease: "power2.out",
-      },
+      // snap: {
+      //   snapTo:
+      //     1 /
+      //     (document.querySelectorAlls =
+      //       document.querySelectorAll(".horizontal-section").length - 1),
+      //   duration: 0.4,
+      //   ease: "power2.out",
+      // },
     },
   });
 }
@@ -186,3 +252,5 @@ window.addEventListener("beforeunload", () => {
 });
 
 //   ================== cards design js =================== //
+
+console.log('Home page prr aya h');
