@@ -68,56 +68,91 @@
 barba.init({
   transitions: [
     {
-      name: "instant-cover-transition",
+      name: "dual-overlay-transition",
 
       async leave(data) {
-        // IMMEDIATELY create and show overlay (no delay)
-        const overlay = document.createElement("div");
-        overlay.className = "transition-overlay";
-        overlay.style.cssText = `
+        // Create BLACK full-screen overlay
+        const blackOverlay = document.createElement("div");
+        blackOverlay.className = "black-transition-overlay";
+        blackOverlay.style.cssText = `
           position: fixed;
           top: 0;
           left: 0;
           width: 100%;
           height: 0; /* Start with 0 height */
-          background: #000;
-          z-index: 9999;
+          background: #000; /* Black color */
+          z-index: 9998; /* One layer below green */
           overflow: hidden;
         `;
-        document.body.appendChild(overlay);
+        document.body.appendChild(blackOverlay);
 
-        // IMMEDIATELY expand to cover screen (no old page visible)
-        await gsap.to(overlay, {
-          height: "100%",
+        // Create GREEN 30vh overlay
+        const greenOverlay = document.createElement("div");
+        greenOverlay.className = "green-transition-overlay";
+        greenOverlay.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 0; /* Start with 0 height */
+          background: #10b981; /* Emerald green color */
+          z-index: 9999; /* On top of black overlay */
+          overflow: hidden;
+        `;
+        document.body.appendChild(greenOverlay);
+
+        // ANIMATE BOTH OVERLAYS SIMULTANEOUSLY
+        // Black expands to full screen
+        const blackAnimation = gsap.to(blackOverlay, {
+          height: "100vh",
           duration: 0.5,
           ease: "power2.out",
         });
 
-        // Now remove old page (already covered by overlay)
+        // Green expands to 30vh
+        const greenAnimation = gsap.to(greenOverlay, {
+          height: "30vh",
+          duration: 0.5,
+          ease: "power2.out",
+        });
+
+        // Wait for both to complete
+        await Promise.all([blackAnimation, greenAnimation]);
+
+        // Remove old page (now covered by overlays)
         data.current.container.remove();
 
-        // Continue sliding down
-        await gsap.to(overlay, {
+        // SLIDE BOTH OVERLAYS DOWN TOGETHER
+        const slideBlack = gsap.to(blackOverlay, {
           top: "100%",
-          duration: 0.5,
+          duration: 1,
           ease: "power2.in",
         });
 
-        return overlay;
+        const slideGreen = gsap.to(greenOverlay, {
+          top: "100%",
+          duration: 1,
+          ease: "power2.in",
+        });
+
+        await Promise.all([slideBlack, slideGreen]);
+
+        return { blackOverlay, greenOverlay };
       },
 
       async enter(data) {
-        // Remove overlay
-        const overlay = document.querySelector(".transition-overlay");
-        if (overlay) {
-          overlay.remove();
-        }
+        // Remove both overlays
+        const blackOverlay = document.querySelector(".black-transition-overlay");
+        const greenOverlay = document.querySelector(".green-transition-overlay");
+        
+        if (blackOverlay) blackOverlay.remove();
+        if (greenOverlay) greenOverlay.remove();
 
         // Show new page
         data.next.container.style.opacity = "0";
         await gsap.to(data.next.container, {
           opacity: 1,
-          duration: 0.6,
+          duration: 0.4,
           ease: "power2.out",
         });
       },
