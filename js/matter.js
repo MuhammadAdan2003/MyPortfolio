@@ -109,7 +109,7 @@ export default function initMatterJS() {
     } else if (screenWidth < 1024) {
       return Math.min(32, BIG_CIRCLE_RADIUS / 5);
     } else {
-      return Math.min(45, BIG_CIRCLE_RADIUS / 6);
+      return Math.min(55, BIG_CIRCLE_RADIUS / 3.5);
     }
   }
 
