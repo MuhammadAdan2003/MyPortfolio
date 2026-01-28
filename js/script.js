@@ -51,7 +51,7 @@
 //         // Animate new page in
 //         data.next.container.style.opacity = "0";
 //         data.next.container.style.transform = "translateY(20px)";
-        
+
 //         await gsap.to(data.next.container, {
 //           opacity: 1,
 //           y: 0,
@@ -71,80 +71,76 @@ barba.init({
       name: "dual-overlay-transition",
 
       async leave(data) {
-        // Create BLACK full-screen overlay
+        // Black - pehle aaye
         const blackOverlay = document.createElement("div");
         blackOverlay.className = "black-transition-overlay";
         blackOverlay.style.cssText = `
           position: fixed;
-          top: 0;
+          top: -100%;
           left: 0;
           width: 100%;
-          height: 0; /* Start with 0 height */
-          background: #000; /* Black color */
-          z-index: 9998; /* One layer below green */
-          overflow: hidden;
+          height: 100vh;
+          background: #000;
+          z-index: 9998;
         `;
         document.body.appendChild(blackOverlay);
 
-        // Create GREEN 30vh overlay
+        // Black ko neeche layein
+        await gsap.to(blackOverlay, {
+          top: "0%",
+          duration: 1,
+          ease: "power2.out",
+        });
+
+        // Green - phir aaye
         const greenOverlay = document.createElement("div");
         greenOverlay.className = "green-transition-overlay";
         greenOverlay.style.cssText = `
           position: fixed;
-          top: 0;
+          top: -100%;
           left: 0;
           width: 100%;
-          height: 0; /* Start with 0 height */
-          background: #10b981; /* Emerald green color */
-          z-index: 9999; /* On top of black overlay */
-          overflow: hidden;
+          height: 100vh;
+          background: #10b981;
+          z-index: 9999;
         `;
         document.body.appendChild(greenOverlay);
 
-        // ANIMATE BOTH OVERLAYS SIMULTANEOUSLY
-        // Black expands to full screen
-        const blackAnimation = gsap.to(blackOverlay, {
-          height: "100vh",
+        // Green ko neeche layein
+        await gsap.to(greenOverlay, {
+          top: "0%",
           duration: 0.5,
           ease: "power2.out",
+          // delay: 0.2,
         });
 
-        // Green expands to 30vh
-        const greenAnimation = gsap.to(greenOverlay, {
-          height: "30vh",
-          duration: 0.5,
-          ease: "power2.out",
-        });
-
-        // Wait for both to complete
-        await Promise.all([blackAnimation, greenAnimation]);
-
-        // Remove old page (now covered by overlays)
+        // Old page remove
         data.current.container.remove();
 
-        // SLIDE BOTH OVERLAYS DOWN TOGETHER
-        const slideBlack = gsap.to(blackOverlay, {
-          top: "100%",
-          duration: 1,
+        // Ab dono NICHE SE shrink ho jaayein
+        // Black pehle shrink ho
+        await gsap.to(blackOverlay, {
+          height: "0",
+          top: "100%", // NICHE SE shrink hoga
+          duration: 0.5,
           ease: "power2.in",
         });
 
-        const slideGreen = gsap.to(greenOverlay, {
-          top: "100%",
-          duration: 1,
+        // Green phir shrink ho
+        await gsap.to(greenOverlay, {
+          height: "0",
+          top: "100%", // NICHE SE shrink hoga
+          duration: 0.5,
           ease: "power2.in",
+          delay: 0.1,
         });
-
-        await Promise.all([slideBlack, slideGreen]);
-
-        return { blackOverlay, greenOverlay };
       },
 
       async enter(data) {
-        // Remove both overlays
+        // Remove overlays
         const blackOverlay = document.querySelector(".black-transition-overlay");
         const greenOverlay = document.querySelector(".green-transition-overlay");
-        
+
         if (blackOverlay) blackOverlay.remove();
         if (greenOverlay) greenOverlay.remove();
 
@@ -222,11 +218,11 @@ function handlePillClick(e) {
 
   document.documentElement.style.setProperty(
     "--pill-left",
-    activeRect.left - trackRect.left + "px"
+    activeRect.left - trackRect.left + "px",
   );
   document.documentElement.style.setProperty(
     "--pill-right",
-    trackRect.right - activeRect.right + "px"
+    trackRect.right - activeRect.right + "px",
   );
 }
 
@@ -281,46 +277,46 @@ function initHorizontalScroll() {
   });
 }
 
-// Complete signature animation with stroke and fill drawing 
-gsap.fromTo("#svgGroup path", 
-    {
-        // Initial state - invisible
-        strokeDasharray: 2000,
-        strokeDashoffset: 2000,
-        fill: "transparent",
-        stroke: "#10b981",
-        strokeWidth: 0.5
-    },
-    {
-        // Animate both stroke and fill together
-        strokeDashoffset: 0,
-        fill: "#10b981",
-        duration: 6,
-        ease: "power2.inOut",
-        
-        // On each update, make sure fill follows stroke
-        onUpdate: function() {
-            // Get current progress (0 to 1)
-            const progress = this.progress();
-            
-            // Calculate fill opacity based on stroke progress
-            const fillOpacity = Math.min(progress * 1.5, 1);
-            
-            // Update fill with partial opacity as stroke draws
-            gsap.set("#svgGroup path", {
-                fillOpacity: fillOpacity
-            });
-        },
-        
-        onComplete: function() {
-            // Ensure final state is solid fill
-            gsap.set("#svgGroup path", {
-                fillOpacity: 1,
-                fill: "#10b981"
-            });
-        }
-    }
-);
+// Complete signature animation with stroke and fill drawing
+// gsap.fromTo("#svgGroup path",
+//     {
+//         // Initial state - invisible
+//         strokeDasharray: 2000,
+//         strokeDashoffset: 2000,
+//         fill: "transparent",
+//         stroke: "#10b981",
+//         strokeWidth: 0.5
+//     },
+//     {
+//         // Animate both stroke and fill together
+//         strokeDashoffset: 0,
+//         fill: "#10b981",
+//         duration: 6,
+//         ease: "power2.inOut",
+
+//         // On each update, make sure fill follows stroke
+//         onUpdate: function() {
+//             // Get current progress (0 to 1)
+//             const progress = this.progress();
+
+//             // Calculate fill opacity based on stroke progress
+//             const fillOpacity = Math.min(progress * 1.5, 1);
+
+//             // Update fill with partial opacity as stroke draws
+//             gsap.set("#svgGroup path", {
+//                 fillOpacity: fillOpacity
+//             });
+//         },
+
+//         onComplete: function() {
+//             // Ensure final state is solid fill
+//             gsap.set("#svgGroup path", {
+//                 fillOpacity: 1,
+//                 fill: "#10b981"
+//             });
+//         }
+//     }
+// );
 
 //   gsap.to(".progress-counter" , {
 //     opacity : 1,
@@ -355,4 +351,96 @@ window.addEventListener("beforeunload", () => {
 
 //   ================== cards design js =================== //
 
-console.log('Home page prr aya h');
+// console.log('Home page prr aya h');
+
+function splitHeroHeadings() {
+  const headings = document.querySelectorAll(".hero-heading");
+
+  headings.forEach((heading) => {
+    if (heading.dataset.split === "true") return;
+
+    const text = heading.textContent.trim();
+    heading.textContent = "";
+
+    text.split("").forEach((letter) => {
+      const span = document.createElement("span");
+      span.textContent = letter === " " ? "\u00A0" : letter;
+      span.style.display = "inline-block"; // IMPORTANT
+      heading.appendChild(span);
+    });
+
+    heading.dataset.split = "true";
+  });
+}
+
+function animateHeroHeadings() {
+  const headings = document.querySelectorAll(".hero-heading");
+
+  const tl = gsap.timeline();
+
+  // Animate all headings in parallel
+  headings.forEach((heading) => {
+    const letters = heading.querySelectorAll("span");
+
+    // Add letters animation to timeline, start at same time
+    tl.fromTo(
+      letters,
+      {
+        y: 1000,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1.5,  // faster duration
+        ease: "power3.out",
+        stagger: 0.03,  // faster stagger
+      },
+      0 // all headings animate together
+    );
+  });
+
+  // SVG animation, start 0.5s after letters animation
+  tl.fromTo(
+    "#svgGroup path",
+    {
+      strokeDasharray: 2000,
+      strokeDashoffset: 2000,
+      fill: "transparent",
+      stroke: "#10b981",
+      strokeWidth: 0.5,
+      fillOpacity: 0,
+    },
+    {
+      strokeDashoffset: 0,
+      fill: "#10b981",
+      fillOpacity: 1,
+      duration: 4.5, // slightly faster
+      ease: "power2.inOut",
+      onUpdate: function () {
+        const progress = this.progress();
+        gsap.set("#svgGroup path", {
+          fillOpacity: Math.min(progress * 1.5, 1),
+        });
+      },
+    }// start 0.5s after letters animation
+  );
+}
+
+
+
+// INITIAL LOAD
+document.addEventListener("DOMContentLoaded", () => {
+  splitHeroHeadings();
+  animateHeroHeadings();
+});
+
+// BARBA SUPPORT (optional)
+if (window.barba) {
+  barba.hooks.afterEnter(() => {
+    splitHeroHeadings();
+    animateHeroHeadings();
+  });
+}
+
+// console.log(headings);

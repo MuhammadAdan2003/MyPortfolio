@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-50" >
     <!-- Your existing content -->
 
     <!-- navbar  -->
@@ -36,8 +36,8 @@
         class="fixed top-[2%] lg:w-[40%] bg-[#111111] border-2 border-white text-white rounded-lg lg:rounded-xl left-1/2 -translate-x-1/2 z-50">
         <div class="flex justify-around items-center">
             <span class="p-4 lg:p-5"><a href="index.html">Home</a></span>
-            <span class="p-4 lg:p-5"><a href="#">Testimonials</a></span>
-            <span class="p-4 lg:p-5"><a href="#">Projects</a></span>
+            <span class="p-4 lg:p-5"><a href="testimonial.html">Testimonials</a></span>
+            <span class="p-4 lg:p-5"><a href="projects.html">Projects</a></span>
             <span class="p-4 lg:p-5"><a href="skills.html">Skills</a></span>
             <!-- <span class="p-4 lg:p-5">text</span> -->
         </div>
@@ -48,7 +48,11 @@
             <div
                 class="hero h-screen relative overflow-hidden sticky top-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px), linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px]">
                 <div class="relative px-10 pt-20 h-screen flex justify-center flex-col">
-                    <h1 class="hero-text gilroy leading-[16vw] text-[16vw]">Creative</h1>
+                <div class="h-[16vw] block overflow-hidden">
+
+                    <h1 class="hero-text hero-heading gilroy leading-[16vw] text-[16vw]">Creative</h1>
+                </div>
+
                     <div class="absolute bottom-[0%] hidden lg:right-[2%] lg:top-[20%] lg:w-[30%] lg:block">
                         <h3 class="text-4xl mazius text-primary">Creative Developer Vibe</h3>
                         <p class="text-xl gilroy">
@@ -58,9 +62,12 @@
                             leave a lasting impression.
                         </p>
                     </div>
-                    <h1 class="hero-text gilroy lg:text-end leading-[14vw] text-[16vw]">
-                        Developer
-                    </h1>
+                    <div class="h-[16vw] block overflow-hidden">
+                        <h1 class="hero-text gilroy hero-heading lg:text-end leading-[14vw] text-[16vw]">
+                            Developer
+                        </h1>
+
+                    </div>
                     <div class="flex justify-center mt-5 lg:mt-0 lg:block">
                         <svg viewBox="0 0 851.216 161.207" xmlns="http://www.w3.org/2000/svg"
                             preserveAspectRatio="xMidYMid meet" class="w-[100%] lg:w-[50%] h-full">
@@ -285,6 +292,7 @@
     </main>
     <!-- ================= END CARDS SECTION ==================  -->
     <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.min.js"></script>
-    <script src="js/script.js"></script>
+    <!-- <script src="js/script.js"></script> -->
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

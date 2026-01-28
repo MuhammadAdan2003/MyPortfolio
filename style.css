@@ -257,3 +257,44 @@ html.lenis body {
 /* Import Google Font 'Poppins' */
 /* @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"); */
 
+
+/* .hero-heading{
+  opacity: 0;
+} */
+
+/* style.css mein yeh add karo */
+/* .hero-heading.initial-hide {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.hero-heading.animate-ready {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.hero-heading span {
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.hero-heading.animate-ready span {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+} */
+
+/* Home page headings initial state */
+.hero-heading {
+  visibility: hidden; /* Sirf visibility hide karein */
+}
+
+/* SVG signature initial state */
+#svgGroup path {
+  visibility: hidden;
+}
+
+/* Horizontal scroll elements */
+.horizontal-container {
+  visibility: hidden;
+}
