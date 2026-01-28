@@ -10,9 +10,6 @@ let currentPage = null;
 let rafId = null;
 let isTransitioning = false;
 
-// ============================================
-// LENIS SMOOTH SCROLL - OPTIMIZED
-// ============================================
 function initLenis() {
   // Check if Lenis is loaded
   if (typeof Lenis === "undefined") {
@@ -36,12 +33,12 @@ function initLenis() {
   try {
     // Create Lenis instance with optimized settings
     lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1.5, // pehle 1.2 → thoda slower for smoothness
+      easing: (t) => 1 - Math.pow(1 - t, 4), // smoother easing curve
       smooth: true,
       smoothTouch: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 1, // same
+      touchMultiplier: 1.2, // pehle 1.5 → slightly smoother touch
       infinite: false,
     });
 
