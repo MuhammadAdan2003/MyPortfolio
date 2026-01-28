@@ -150,7 +150,7 @@ export function homeInit() {
           duration: 4.5,
           ease: "power2.inOut",
         },
-        0.2, // Thoda sa delay
+        0.5, // Thoda sa delay
       );
     }
   }
