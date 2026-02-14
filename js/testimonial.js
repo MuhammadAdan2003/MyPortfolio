@@ -38,17 +38,17 @@ export function testimonialInit() {
     });
 
     // Add CSS for animation
-    if (!document.querySelector("#testimonial-styles")) {
-      const style = document.createElement("style");
-      style.id = "testimonial-styles";
-      style.textContent = `
-        @keyframes fadeOut {
-          0% { opacity: 1; }
-          100% { opacity: 0; }
-        }
-      `;
-      document.head.appendChild(style);
-    }
+    // if (!document.querySelector("#testimonial-styles")) {
+    //   const style = document.createElement("style");
+    //   style.id = "testimonial-styles";
+    //   style.textContent = `
+    //     @keyframes fadeOut {
+    //       0% { opacity: 1; }
+    //       100% { opacity: 0; }
+    //     }
+    //   `;
+    //   document.head.appendChild(style);
+    // }
 
     // Store for cleanup
     window.testimonialHandlers = {

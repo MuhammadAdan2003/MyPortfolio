@@ -28,30 +28,41 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="bg-gray-50" >
+<body class="bg-gray-50">
     <!-- Your existing content -->
 
     <!-- navbar  -->
-    <div
-        class="fixed top-[2%] lg:w-[40%] bg-[#111111] border-2 border-white text-white rounded-lg lg:rounded-xl left-1/2 -translate-x-1/2 z-50">
-        <div class="flex justify-around items-center">
-            <span class="p-4 lg:p-5"><a href="index.html">Home</a></span>
-            <span class="p-4 lg:p-5"><a href="testimonial.html">Testimonials</a></span>
-            <span class="p-4 lg:p-5"><a href="projects.html">Projects</a></span>
-            <span class="p-4 lg:p-5"><a href="skills.html">Skills</a></span>
-            <!-- <span class="p-4 lg:p-5">text</span> -->
+    <!-- <div
+        class="fixed top-[2%] lg:w-[50%] bg-[#000] border-2 border-white text-white rounded-xl lg:rounded-xl left-1/2 -translate-x-1/2 z-50">
+        <div class="flex justify-between items-center">
+<div class="flex items-center">
+    <img class="rounded-xl" width="120px" src="logoBlack.png" alt="">
+</div>
+<div class="px-8">
+    <span class="p-4 lg:p-3"><a href="index.html">Home</a></span>
+    <span class="p-4 lg:p-3"><a href="testimonial.html">Testimonials</a></span>
+    <span class="p-4 lg:p-3"><a href="projects.html">Projects</a></span>
+    <span class="p-4 lg:p-3"><a href="skills.html">Skills</a></span>
+</div>
+
         </div>
-    </div>
+    </div> -->
+    <!-- navbar ends  -->
+    <!-- <div class="fs-hero"> -->
+    <!-- <h1>Fullscreen Menu</h1> -->
+    
+
+
     <main data-barba="wrapper">
         <div data-barba="container" data-barba-namespace="home" class="page-content">
-          <!-- hero section  -->
+            <!-- hero section  -->
             <div
                 class="hero h-screen relative overflow-hidden sticky top-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px), linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px]">
-                <div class="relative px-10 pt-20 h-screen flex justify-center flex-col">
-                <div class="h-[16vw] block overflow-hidden">
+                <div class="relative px-10 h-screen flex justify-center flex-col">
+                    <div class="h-[16vw] block overflow-hidden">
 
-                    <h1 class="hero-text hero-heading gilroy leading-[16vw] text-[16vw]">Creative</h1>
-                </div>
+                        <h1 class="hero-text hero-heading gilroy leading-[16vw] text-[16vw]">Creative</h1>
+                    </div>
 
                     <div class="absolute  bottom-[0%] hidden lg:right-[2%] lg:top-[20%] lg:w-[30%] lg:block">
                         <h3 class="text-4xl mazius hero-sub text-primary">Creative Developer Vibe</h3>
@@ -94,7 +105,7 @@
             </div>
 
             <!-- About Me Section with Pills -->
-            <div class="aboutMe grid lg:grid-cols-2 grid-cols-1 h-auto lg:h-[100vh] bg-black relative z-50">
+            <div class="aboutMe grid lg:grid-cols-2 grid-cols-1 h-auto bg-black relative z-50">
                 <div class="flex justify-center items-center mt-14 lg:mt-0">
                     <img src="myimage.png" alt="" width="50%" />
                 </div>
@@ -268,9 +279,15 @@
 
                     <!-- 8 -->
                     <section class="horizontal-section horizontal-outro">
-                        <h1>Tomorrow is Already Here</h1>
+                        <h1 class="mt-[100px]">Tomorrow is Already Here</h1>
                     </section>
                 </div>
+            </div>
+
+            <!-- last section  -->
+
+            <div class="h-screen bg-white relative" style="z-index: 10000;">
+                <h1>new section </h1>
             </div>
 
             <!-- Black section after horizontal scroll -->
@@ -287,7 +304,7 @@
         </p>
       </div>
     </div> -->
-            <!-- =============== cards section ===============  -->        
+            <!-- =============== cards section ===============  -->
         </div>
     </main>
     <!-- ================= END CARDS SECTION ==================  -->
@@ -295,4 +312,5 @@
     <!-- <script src="js/script.js"></script> -->
     <script type="module" src="js/main.js"></script>
 </body>
+
 </html>

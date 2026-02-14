@@ -122,7 +122,8 @@ export function homeInit() {
           y: 0,
           autoAlpha: 1,
           duration: 1.5,
-          stagger: 0.03,
+          stagger: 0.05,
+          delay: -0.5,
         },
         0, // Sabhi ek saath start ho
       );
@@ -163,6 +164,7 @@ export function homeInit() {
   window.homeHandlers = {
     handlePillClick: handlePillClick,
   };
+
 
   console.log("✅ Home page initialized");
 }

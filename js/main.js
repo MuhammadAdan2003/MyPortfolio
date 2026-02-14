@@ -10,6 +10,164 @@ let currentPage = null;
 let rafId = null;
 let isTransitioning = false;
 
+// =========== navhtml ==========
+
+// ===== 1️⃣ Navbar function definition =====
+
+let navbarHTML = `<div id="navOpen" class="fs-menu-btn cursor-pointer border-2 p-3 border-black bg-gray-50 rounded-2xl">
+        <span id="fir"></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div id="fullnav" style="transform: translateY(-100%); opacity:0; visibility:hidden;" class="fixed h-screen bg-[#111] z-50">
+        <div id="navClose" class="flex w-100 justify-end text-white p-5">
+            close
+        </div>
+        <div class="flex">
+            <div class="flex flex-col gap-8 text-6xl p-20 items-start">
+
+                <div class="h-[80px] overflow-hidden w-[100%]">
+                    <span
+                        class="mazius relative inline-block text-white cursor-pointer
+               transition-all duration-300
+               hover:text-[#10b981]
+               hover:scale-110
+               hover:-translate-y-1
+               after:content-['']
+               after:absolute
+               after:left-0
+               after:-bottom-2
+               after:h-[2px]
+               after:w-0
+               after:bg-[#10b981]
+               after:transition-all
+               after:duration-300
+               after:origin-left
+               hover:after:w-full">
+                        <a href="index.html">Home</a>
+                    </span>
+                </div>
+
+                <div class="h-[80px] overflow-hidden w-[100%]">
+                    <span
+                        class="mazius relative inline-block text-white cursor-pointer transition-all duration-300 hover:text-[#10b981] hover:scale-110 hover:-translate-y-1 after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-[#10b981] after:transition-all after:duration-300 after:origin-left hover:after:w-full">
+                        <a href="testimonial.html">Testimonials</a>
+                    </span>
+                </div>
+
+
+                <div class="h-[80px] overflow-hidden w-[100%]">
+                    <span
+                        class="mazius relative inline-block text-white cursor-pointer transition-all duration-300 hover:text-[#10b981] hover:scale-110 hover:-translate-y-1 after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-[#10b981] after:transition-all after:duration-300 after:origin-left hover:after:w-full">
+                        <a href="projects.html">Projects</a>
+                    </span>
+                </div>
+
+                <div class="h-[80px] overflow-hidden w-[100%]">
+                    <span
+                        class="mazius relative inline-block text-white cursor-pointer transition-all duration-300 hover:text-[#10b981] hover:scale-110 hover:-translate-y-1 after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-[#10b981] after:transition-all after:duration-300 after:origin-left hover:after:w-full">
+                        <a href="skills.html" class="text-inherit">Skills</a>
+                    </span>
+                </div>
+                <div class="h-[80px] overflow-hidden w-[100%]">
+                    <span
+                        class="mazius relative inline-block text-white cursor-pointer transition-all duration-300 hover:text-[#10b981] hover:scale-110 hover:-translate-y-1 after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-[#10b981] after:transition-all after:duration-300 after:origin-left hover:after:w-full">
+                        <a href="#">Blogs</a>
+                    </span>
+                </div>
+            </div>
+            <div class="flex items-center p-20 h-full">
+                <img id="navImage" src="images/homesccreen.png" alt="">
+            </div>
+        </div>
+    </div>`;
+
+function initNavbar() {
+  const navOpen = document.getElementById("navOpen");
+  const navClose = document.getElementById("navClose");
+  const fullnav = document.getElementById("fullnav");
+  if (!fullnav || !navOpen || !navClose) return;
+
+  const spans = fullnav.querySelectorAll(".mazius");
+  const navImage = document.getElementById("navImage");
+
+  // ✅ Ensure hidden on Barba page enter
+  gsap.set(fullnav, { y: "-100%", autoAlpha: 0 }); // hidden
+  gsap.set(spans, { y: 200, opacity: 0 });
+  gsap.set(navImage, { autoAlpha: 0, scale: 0.8 });
+
+  const menuTimeline = gsap.timeline({ paused: true });
+
+  menuTimeline
+    .to(fullnav, { y: "0%", autoAlpha: 1, duration: 1, ease: "power4.out" })
+    .to(spans, { y: 0, opacity: 1, stagger: 0.15, duration: 1.2, ease: "power4.out", delay: -0.7 })
+    .to(navImage, { autoAlpha: 1, scale: 1, duration: 0.8, ease: "back.out(1.5)", delay: -0.6 });
+
+  navOpen.addEventListener("click", () => menuTimeline.play());
+  navClose.addEventListener("click", () => menuTimeline.reverse());
+}
+
+// ==========================
+// NAVBAR RENDER FUNCTION
+// ==========================
+function renderNavbar() {
+  // Agar navbar already present hai, return
+  if (document.getElementById("fullnav")) return;
+  // Insert navbar HTML
+  const navbarContainer = document.createElement("div");
+  navbarContainer.innerHTML = navbarHTML;
+  document.body.prepend(navbarContainer);
+  // Initialize animations and click events
+  initNavbar();
+}
+
+
+// ==========================
+// INITIALIZE NAVBAR
+// ==========================
+
+// Direct page load
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", () => {
+    renderNavbar(); // always render on first load
+  });
+} else {
+  renderNavbar();
+}
+
+// ==========================
+// BARBA PAGE TRANSITIONS
+// ==========================
+if (typeof barba !== "undefined") {
+  barba.hooks.after(() => {
+    renderNavbar(); // Only inserts & initializes if not present
+  });
+}
+
+// Call on first load
+document.addEventListener("DOMContentLoaded", initNavbar);
+
+// Call after each Barba page load
+if (typeof barba !== "undefined") {
+  barba.hooks.enter(() => {
+    const fullnav = document.getElementById("fullnav");
+    if (fullnav) {
+      gsap.set(fullnav, { y: "-100%", autoAlpha: 0 }); // hide navbar on new page enter
+      const spans = fullnav.querySelectorAll(".mazius");
+      const navImage = document.getElementById("navImage");
+      gsap.set(spans, { y: 200, opacity: 0 });
+      gsap.set(navImage, { autoAlpha: 0, scale: 0.8 });
+    }
+  });
+
+  barba.hooks.after(() => {
+    renderNavbar();  // insert if not already
+    initNavbar();    // always reinit
+  });
+}
+
+
 function initLenis() {
   // Check if Lenis is loaded
   if (typeof Lenis === "undefined") {
@@ -526,3 +684,19 @@ window.testApp = () => {
 
 console.log("🎉 Main.js loaded successfully");
 console.log("🔧 Use window.app for debugging and control");
+
+document.addEventListener("DOMContentLoaded", function () {
+  const fsMenu = document.querySelector(".fs-menu");
+
+  if (fsMenu) {
+    // Add click events to both buttons
+    const buttons = document.querySelectorAll(".fs-close-btn, .fs-menu-btn");
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        fsMenu.classList.toggle("active");
+        console.log("click hua h ");
+      });
+    });
+  }
+});
