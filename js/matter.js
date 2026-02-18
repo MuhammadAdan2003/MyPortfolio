@@ -1,424 +1,182 @@
-// matter.js - Complete optimized physics simulation
-console.log("🔧 Matter.js simulation module loaded");
-
-// Export Matter.js setup
 export default function initMatterJS() {
-  if (typeof Matter === "undefined") {
-    console.error("❌ Matter.js library not found");
-    return null;
-  }
+  if (typeof Matter === "undefined") return null;
 
-  console.log("🎯 Starting Matter.js physics simulation...");
+  const {
+    Engine,
+    Render,
+    Runner,
+    Bodies,
+    Composite,
+    Mouse,
+    MouseConstraint,
+    Events,
+    Body,
+  } = Matter;
 
-  // Module aliases
-  const Engine = Matter.Engine,
-    Render = Matter.Render,
-    Runner = Matter.Runner,
-    Bodies = Matter.Bodies,
-    Composite = Matter.Composite,
-    Mouse = Matter.Mouse,
-    MouseConstraint = Matter.MouseConstraint,
-    World = Matter.World,
-    Events = Matter.Events;
-
-  // Create engine
   const engine = Engine.create();
-  engine.gravity.x = 0;
-  engine.gravity.y = 0.2;
-
-  // Get the canvas element and wrapper
   const canvas = document.getElementById("physics-canvas");
   const wrapper = document.getElementById("simulation-wrapper");
 
-  if (!canvas || !wrapper) {
-    console.error("❌ Canvas or wrapper not found");
-    return null;
-  }
+  if (!canvas || !wrapper) return null;
 
-  // Hide loading overlay
-  const loadingOverlay = document.getElementById("matter-loading");
-  if (loadingOverlay) {
-    loadingOverlay.classList.add("fade-out");
-  }
+  // 1. SETTINGS
+  const width = wrapper.clientWidth;
+  const height = wrapper.clientHeight;
+  const isMobile = window.innerWidth < 768;
 
-  console.log("✅ Canvas found, setting up renderer...");
+  // Real gravity (niche ki taraf)
+  engine.gravity.y = 1;
 
-  // Create renderer
   const render = Render.create({
     element: wrapper,
     engine: engine,
     canvas: canvas,
     options: {
-      width: wrapper.clientWidth,
-      height: wrapper.clientHeight,
+      width: width,
+      height: height,
       wireframes: false,
-      background: "#ffffff",
-      showVelocity: false,
+      background: "transparent",
+      pixelRatio: window.devicePixelRatio || 1,
     },
   });
 
-  // Create runner
   const runner = Runner.create();
+  let boxes = [];
 
-  // Arrays to track circles
-  let circles = [];
-  let bigCircle = null;
-  let BIG_CIRCLE_RADIUS;
-
-  // Text options for circles
-  const circleTexts = [
+  const skillTexts = [
     "HTML",
     "CSS",
+    "Bootstrap",
     "JavaScript",
+    "JQuery",
     "React",
     "GSAP",
     "PHP",
-    "LARAVEL",
+    "Laravel",
     "MySQL",
-    "GIT",
-    "TAILWIND",
-    "BOOTSTRAP",
+    "Tailwind",
     "UI/UX",
-    "APIs",
-    "FIGMA",
-    "NODE",
+    "Git",
+    "MatterJs",
+    "BarbaJs"
+
   ];
 
-  // Calculate responsive BIG circle radius
-  function calculateCircleRadius() {
-    const width = wrapper.clientWidth;
-    const height = wrapper.clientHeight;
-    const screenWidth = window.innerWidth;
-
-    // Responsive sizing based on device
-    if (screenWidth < 640) {
-      return Math.min(width, height) * 0.35;
-    } else if (screenWidth < 1024) {
-      return Math.min(width, height) * 0.38;
-    } else {
-      return Math.min(width, height) * 0.4;
-    }
-  }
-
-  // Calculate responsive text size for circles
-  function calculateCircleSize() {
-    const screenWidth = window.innerWidth;
-
-    if (screenWidth < 640) {
-      return Math.min(28, BIG_CIRCLE_RADIUS / 5);
-    } else if (screenWidth < 1024) {
-      return Math.min(32, BIG_CIRCLE_RADIUS / 5);
-    } else {
-      return Math.min(55, BIG_CIRCLE_RADIUS / 3.5);
-    }
-  }
-
-  // Function to create a small circle with text
-  function createSmallCircle(x, y, text) {
-    const radius = calculateCircleSize();
-    const circle = Bodies.circle(x, y, radius, {
-      restitution: 0.7,
-      friction: 0.05,
-      frictionAir: 0.02,
-      density: 0.002,
-      render: {
-        fillStyle: "#000000",
-        lineWidth: 0,
-        strokeStyle: "transparent",
-      },
-    });
-
-    circle.text = text;
-    Composite.add(engine.world, circle);
-    circles.push(circle);
-
-    return circle;
-  }
-
-  // Function to create the big container circle
-  function createBigCircle() {
-    const canvasWidth = render.options.width;
-    const canvasHeight = render.options.height;
-    const centerX = canvasWidth / 2;
-    const centerY = canvasHeight / 2;
-
-    // Recalculate radius
-    BIG_CIRCLE_RADIUS = calculateCircleRadius();
-
-    // Create invisible circle for boundary
-    bigCircle = Bodies.circle(centerX, centerY, BIG_CIRCLE_RADIUS, {
+  // 2. CREATE BOUNDARIES (Bottom, Left, Right)
+  const wallThickness = 100;
+  const ground = Bodies.rectangle(
+    width / 2,
+    height + wallThickness / 2 - 5,
+    width,
+    wallThickness,
+    {
       isStatic: true,
-      isSensor: true,
-      render: {
-        fillStyle: "transparent",
-        strokeStyle: "transparent",
-        lineWidth: 0,
-      },
+      render: { visible: false },
+    },
+  );
+  const leftWall = Bodies.rectangle(
+    -wallThickness / 2,
+    height / 2,
+    wallThickness,
+    height * 2,
+    {
+      isStatic: true,
+      render: { visible: false },
+    },
+  );
+  const rightWall = Bodies.rectangle(
+    width + wallThickness / 2,
+    height / 2,
+    wallThickness,
+    height * 2,
+    {
+      isStatic: true,
+      render: { visible: false },
+    },
+  );
+
+  Composite.add(engine.world, [ground, leftWall, rightWall]);
+
+  // 3. CREATE PILL SHAPES
+  function createSkillBox(text) {
+    const fontSize = isMobile ? 14 : 18;
+    const padding = isMobile ? 25 : 200;
+
+    // Calculate width based on text length
+    const textWidth = text.length * (isMobile ? 8 : 5) + padding;
+    const boxHeight = isMobile ? 35 : 100;
+    const radius = 15; // For chamfer (rounded corners)
+
+    const x = Math.random() * (width - 100) + 50;
+    const y = Math.random() * -500; // Start above the screen
+
+    const box = Bodies.rectangle(x, y, textWidth, boxHeight, {
+      chamfer: { radius: boxHeight / 2 }, // Perfect pill shape
+      restitution: 0.4,
+      friction: 0.5,
+      render: { fillStyle: "#000000" },
     });
 
-    Composite.add(engine.world, bigCircle);
-    createCircularBoundary(centerX, centerY, BIG_CIRCLE_RADIUS);
+    box.text = text;
+    box.w = textWidth;
+    box.h = boxHeight;
 
-    return bigCircle;
+    boxes.push(box);
+    Composite.add(engine.world, box);
   }
 
-  // Create circular boundary using small wall segments
-  function createCircularBoundary(centerX, centerY, radius) {
-    const screenWidth = window.innerWidth;
-    const segments = screenWidth < 640 ? 36 : 48;
-    const angleStep = (Math.PI * 2) / segments;
+  // 4. RENDERING TEXT & RECOVERY
+  Events.on(render, "afterRender", () => {
+    const ctx = render.context;
 
-    for (let i = 0; i < segments; i++) {
-      const angle = i * angleStep;
-      const nextAngle = (i + 1) * angleStep;
+    boxes.forEach((box) => {
+      const { x, y } = box.position;
+      const angle = box.angle;
 
-      const x1 = centerX + Math.cos(angle) * radius;
-      const y1 = centerY + Math.sin(angle) * radius;
-      const x2 = centerX + Math.cos(nextAngle) * radius;
-      const y2 = centerY + Math.sin(nextAngle) * radius;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
 
-      const dx = x2 - x1;
-      const dy = y2 - y1;
-      const length = Math.sqrt(dx * dx + dy * dy);
-      const wallX = (x1 + x2) / 2;
-      const wallY = (y1 + y2) / 2;
-      const wallAngle = Math.atan2(dy, dx);
+      // Draw Text
+      ctx.fillStyle = "#FFFFFF";
+      ctx.font = `600 ${isMobile ? "12px" : "20px"} Poppins`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(box.text, 0, 0);
 
-      const wallThickness = screenWidth < 640 ? 8 : 12;
+      ctx.restore();
 
-      const wall = Bodies.rectangle(wallX, wallY, length, wallThickness, {
-        isStatic: true,
-        angle: wallAngle,
-        render: {
-          fillStyle: "transparent",
-          strokeStyle: "transparent",
-          lineWidth: 0,
-        },
-      });
-
-      Composite.add(engine.world, wall);
-    }
-  }
-
-  // Create small circles inside the big circle
-  function createSmallCircles() {
-    // Remove existing circles
-    circles.forEach((circle) => {
-      Composite.remove(engine.world, circle);
+      // Anti-escape: Agar koi box ghalti se gir jaye nichy
+      if (y > height + 200) {
+        Body.setPosition(box, { x: width / 2, y: -100 });
+      }
     });
-    circles = [];
+  });
 
-    const centerX = render.options.width / 2;
-    const centerY = render.options.height / 2;
-    const screenWidth = window.innerWidth;
-
-    // Adjust number of circles based on screen size
-    let maxCircles = circleTexts.length;
-    if (screenWidth < 640) {
-      maxCircles = 8;
-    } else if (screenWidth < 1024) {
-      maxCircles = 12;
-    } else {
-      maxCircles = 15;
-    }
-
-    for (let i = 0; i < Math.min(maxCircles, circleTexts.length); i++) {
-      let x, y, distance;
-      let attempts = 0;
-      const minDistance = calculateCircleSize() + (screenWidth < 640 ? 15 : 20);
-
-      do {
-        x =
-          centerX +
-          (Math.random() - 0.5) * (BIG_CIRCLE_RADIUS - minDistance) * 1.8;
-        y =
-          centerY +
-          (Math.random() - 0.5) * (BIG_CIRCLE_RADIUS - minDistance) * 1.8;
-        distance = Math.sqrt(
-          Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2),
-        );
-        attempts++;
-      } while (distance > BIG_CIRCLE_RADIUS - minDistance && attempts < 100);
-
-      createSmallCircle(x, y, circleTexts[i]);
-    }
-  }
-
-  // Add mouse control
+  // 5. MOUSE INTERACTION
   const mouse = Mouse.create(render.canvas);
   const mouseConstraint = MouseConstraint.create(engine, {
     mouse: mouse,
-    constraint: {
-      stiffness: 0.1,
-      render: { visible: false },
-    },
+    constraint: { stiffness: 0.1, render: { visible: false } },
   });
 
   Composite.add(engine.world, mouseConstraint);
-  render.mouse = mouse;
 
-  // Track screen width for responsive calculations
-  let screenWidth = window.innerWidth;
+  // Start logic
+  skillTexts.forEach((txt) => createSkillBox(txt));
+  Runner.run(runner, engine);
+  Render.run(render);
 
-  // Handle hover effect
-  function handleHoverEffect() {
-    const mousePosition = mouse.position;
-
-    circles.forEach((circle) => {
-      const dx = mousePosition.x - circle.position.x;
-      const dy = mousePosition.y - circle.position.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      const hoverRadius = circle.circleRadius + (screenWidth < 640 ? 20 : 30);
-
-      if (distance < hoverRadius) {
-        const forceMagnitude = screenWidth < 640 ? 0.006 : 0.008;
-        const force = {
-          x: (circle.position.x - mousePosition.x) * forceMagnitude,
-          y: (circle.position.y - mousePosition.y) * forceMagnitude,
-        };
-        Matter.Body.applyForce(circle, circle.position, force);
-      }
-    });
-  }
-
-  // Custom rendering for circles with text
-  Events.on(render, "afterRender", function () {
-    const context = render.context;
-    const centerX = render.options.width / 2;
-    const centerY = render.options.height / 2;
-
-    // Draw big circle outline
-    context.save();
-    context.beginPath();
-    context.arc(centerX, centerY, BIG_CIRCLE_RADIUS, 0, Math.PI * 2);
-    context.strokeStyle = "rgba(0, 0, 0, 0.8)";
-    context.lineWidth = screenWidth < 640 ? 3 : 4;
-    context.stroke();
-    context.restore();
-
-    // Draw each small circle with text
-    circles.forEach((circle) => {
-      const position = circle.position;
-      const radius = circle.circleRadius;
-
-      context.save();
-      context.translate(position.x, position.y);
-
-      // Draw circle
-      context.beginPath();
-      context.arc(0, 0, radius, 0, Math.PI * 2);
-      context.fillStyle = "#000000";
-      context.fill();
-
-      // Draw text
-      context.fillStyle = "#FFFFFF";
-      let fontSize = Math.max(
-        screenWidth < 640 ? 10 : 12,
-        radius / (screenWidth < 640 ? 2.0 : 1.8),
-      );
-
-      context.font = `600 ${fontSize}px 'Poppins', Arial, sans-serif`;
-      context.textAlign = "center";
-      context.textBaseline = "middle";
-
-      const maxWidth = radius * (screenWidth < 640 ? 1.4 : 1.6);
-      while (
-        context.measureText(circle.text).width > maxWidth &&
-        fontSize > (screenWidth < 640 ? 8 : 10)
-      ) {
-        fontSize -= 1;
-        context.font = `600 ${fontSize}px 'Poppins', Arial, sans-serif`;
-      }
-
-      context.fillText(circle.text, 0, 0);
-      context.restore();
-    });
-
-    handleHoverEffect();
+  // Resize fix
+  window.addEventListener("resize", () => {
+    // Optional: reload for perfect responsive or update boundaries
   });
 
-  // Handle window resize
-  let resizeTimeout;
-  function handleResize() {
-    screenWidth = window.innerWidth;
-
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      const wrapperWidth = wrapper.clientWidth;
-      const wrapperHeight = wrapper.clientHeight;
-
-      render.options.width = wrapperWidth;
-      render.options.height = wrapperHeight;
-      render.canvas.width = wrapperWidth;
-      render.canvas.height = wrapperHeight;
-
-      Composite.clear(engine.world);
-      circles = [];
-      bigCircle = null;
-
-      createBigCircle();
-      createSmallCircles();
-      Composite.add(engine.world, mouseConstraint);
-
-      console.log("🔄 Matter.js resized");
-    }, 150);
-  }
-
-  // Initialize simulation
-  function initSimulation() {
-    screenWidth = window.innerWidth;
-    createBigCircle();
-    createSmallCircles();
-    Runner.run(runner, engine);
-    Render.run(render);
-
-    console.log("✅ Matter.js simulation started");
-  }
-
-  // Start simulation
-  function start() {
-    handleResize();
-    initSimulation();
-  }
-
-  // Stop simulation
-  function stop() {
-    if (runner) Runner.stop(runner);
-    if (render) Render.stop(render);
-
-    // Clear world
-    Composite.clear(engine.world);
-    circles = [];
-    bigCircle = null;
-
-    console.log("🛑 Matter.js simulation stopped");
-  }
-
-  // Prevent canvas from interfering with scrolling
-  canvas.addEventListener("wheel", (e) => {
-    e.stopPropagation();
-  });
-
-  // Handle orientation change
-  window.addEventListener("orientationchange", () => {
-    setTimeout(handleResize, 100);
-  });
-
-  // Add resize listener
-  window.addEventListener("resize", handleResize);
-
-  // Start the simulation
-  start();
-
-  console.log("🎉 Matter.js physics fully initialized");
-
-  // Return control functions
   return {
-    engine: engine,
-    render: render,
-    runner: runner,
-    start: start,
-    stop: stop,
-    handleResize: handleResize,
+    stop: () => {
+      Runner.stop(runner);
+      Render.stop(render);
+      Composite.clear(engine.world);
+    },
   };
 }

@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>developer portfolio · black, white & emerald</title>
+    <!-- Tailwind via CDN + custom layer for extra animations -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome 6 (free) for crisp icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap");
+      * {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+
+      /* custom animations & emerald glow utilities */
+      @keyframes floatGlow {
+        0% {
+          box-shadow:
+            0 0 5px #10b98120,
+            0 0 15px #10b98110;
+          transform: translateY(0px);
+        }
+        50% {
+          box-shadow:
+            0 0 20px #10b98160,
+            0 0 30px #10b98130;
+          transform: translateY(-4px);
+        }
+        100% {
+          box-shadow:
+            0 0 5px #10b98120,
+            0 0 15px #10b98110;
+          transform: translateY(0px);
+        }
+      }
+      .animate-float-glow {
+        animation: floatGlow 4s infinite ease-in-out;
+      }
+      @keyframes borderPulse {
+        0% {
+          border-color: #27272a;
+        }
+        50% {
+          border-color: #10b981;
+        }
+        100% {
+          border-color: #27272a;
+        }
+      }
+      .animate-border-pulse {
+        animation: borderPulse 3s infinite;
+      }
+      @keyframes bgShift {
+        0% {
+          background-position: 0% 0%;
+        }
+        100% {
+          background-position: 100% 100%;
+        }
+      }
+      .bg-announce {
+        background: radial-gradient(circle at 30% 40%, #10b98108, #000 50%);
+        background-size: 200% 200%;
+        animation: bgShift 12s infinite alternate;
+      }
+      /* smooth hover interactions */
+      .card-hover {
+        transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .card-hover:hover {
+        border-color: #10b981;
+        box-shadow:
+          0 20px 30px -15px #10b98160,
+          0 0 0 1px #10b98130 inset;
+        transform: scale(1.01) translateY(-2px);
+      }
+      .emerald-glow {
+        transition: box-shadow 0.2s;
+      }
+      .emerald-glow:hover {
+        box-shadow: 0 0 18px #10b981;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-black text-white antialiased flex items-center justify-center min-h-screen p-5 md:p-8 relative overflow-x-hidden"
+  >
+    <!-- background animated emerald aura -->
+    <div class="fixed inset-0 -z-10 bg-announce opacity-70"></div>
+    <div
+      class="fixed inset-0 -z-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cGF0aCBkPSJNMjAgMjBoMjB2MjBIMjB6IiBmaWxsPSIjMTBiOTgxMDgiIC8+PC9zdmc+')] opacity-20"
+    ></div>
+
+    <!-- main portfolio container - tailwind all the way -->
+    <main
+      class="max-w-6xl w-full bg-zinc-950/70 backdrop-blur-xl border border-white/5 rounded-3xl shadow-2xl p-6 md:p-9 relative overflow-hidden"
+    >
+      <!-- floating emerald accent line (animated) -->
+      <div
+        class="absolute top-0 left-1/4 w-32 h-[2px] bg-gradient-to-r from-transparent via-[#10b981] to-transparent blur-sm animate-pulse"
+      ></div>
+      <div
+        class="absolute bottom-0 right-1/4 w-32 h-[2px] bg-gradient-to-r from-transparent via-[#10b981] to-transparent blur-sm animate-pulse delay-700"
+      ></div>
+
+      <!-- ========== HEADER: black / white / emerald ========== -->
+      <header
+        class="flex flex-wrap items-center justify-between gap-6 pb-8 mb-4 border-b border-white/10 relative"
+      >
+        <!-- left: name & role with animated badge -->
+        <div>
+          <h1
+            class="text-4xl md:text-5xl font-black tracking-tight flex items-center gap-3"
+          >
+            <span
+              class="bg-gradient-to-r from-white via-white to-[#10b981] bg-clip-text text-transparent"
+              >Alex Rivera</span
+            >
+            <span
+              class="bg-[#10b981] text-black text-xl px-3 py-1 rounded-full font-medium flex items-center gap-1 shadow-lg shadow-[#10b981]/30 animate-float-glow"
+            >
+              <i class="fas fa-code text-black"></i> dev
+            </span>
+          </h1>
+          <p
+            class="text-zinc-400 text-lg mt-2 flex items-center gap-2 flex-wrap"
+          >
+            <i class="fas fa-terminal text-[#10b981]"></i> full-stack · react ·
+            node
+            <span
+              class="w-1.5 h-1.5 rounded-full bg-[#10b981] inline-block mx-1 animate-pulse"
+            ></span>
+            <span class="text-white/60">#10b981</span>
+          </p>
+        </div>
+
+        <!-- right: interactive stat pills -->
+        <div class="flex gap-3 flex-wrap">
+          <div
+            class="bg-zinc-900 border border-zinc-800 rounded-full py-2 px-5 flex items-center gap-2 card-hover"
+          >
+            <i class="fas fa-diagram-project text-[#10b981]"></i>
+            <span class="text-white font-medium">12+ projects</span>
+          </div>
+          <div
+            class="bg-zinc-900 border border-zinc-800 rounded-full py-2 px-5 flex items-center gap-2 card-hover"
+          >
+            <i class="fas fa-star text-[#10b981]"></i>
+            <span class="text-white font-medium">6 yrs code</span>
+          </div>
+          <div
+            class="bg-zinc-900 border border-[#10b981] rounded-full py-2 px-5 flex items-center gap-2 emerald-glow"
+          >
+            <i class="fas fa-award text-[#10b981]"></i>
+            <span class="text-white">available</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ========== HERO GRID: main feature + mini highlights ========== -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
+        <!-- left large card (2 cols on large) -->
+        <div
+          class="lg:col-span-2 bg-zinc-900/80 border border-zinc-800 rounded-3xl overflow-hidden card-hover group"
+        >
+          <div
+            class="h-52 bg-gradient-to-br from-zinc-800 to-black relative flex items-center justify-center"
+          >
+            <div
+              class="absolute inset-0 opacity-30 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48cGF0aCBkPSJNMzAgMzBoMzB2MzBIMzB6IiBmaWxsPSIjMTBiOTgxIiBmaWxsLW9wYWNpdHk9IjAuMTUiIC8+PC9zdmc+')]"
+            ></div>
+            <i
+              class="fas fa-laptop-code text-7xl text-[#10b981] drop-shadow-[0_0_25px_#10b981] transition-all duration-300 group-hover:scale-110"
+            ></i>
+          </div>
+          <div class="p-7">
+            <div
+              class="flex items-center gap-2 text-sm uppercase tracking-wider text-[#10b981] font-medium"
+            >
+              <span class="w-8 h-[2px] bg-[#10b981]"></span> featured project
+            </div>
+            <h2 class="text-3xl font-bold mt-3 flex items-center gap-3">
+              emerald<span class="text-[#10b981]">stack</span>
+              <span
+                class="bg-[#10b981]/20 text-[#10b981] text-sm px-3 py-0.5 rounded-full border border-[#10b981]/40"
+                >2025</span
+              >
+            </h2>
+            <p class="text-zinc-300 mt-4 text-lg leading-relaxed max-w-2xl">
+              Full‑stack monitoring dashboard with real‑time metrics —
+              <span
+                class="text-white font-medium bg-black/40 px-2 py-0.5 rounded border border-[#10b981]/30"
+                >Next.js</span
+              >
+              +
+              <span
+                class="text-white font-medium bg-black/40 px-2 py-0.5 rounded border border-[#10b981]/30"
+                >Node</span
+              >
+              + <span class="text-[#10b981]">#10b981</span> accent identity.
+            </p>
+            <div class="flex items-center gap-6 mt-7 flex-wrap">
+              <div class="flex items-center gap-2 text-zinc-400">
+                <i class="fas fa-code-branch text-[#10b981]"></i> 34
+                contributors
+              </div>
+              <div class="flex items-center gap-2 text-zinc-400">
+                <i class="fas fa-star text-[#10b981]"></i> 280 stars
+              </div>
+              <div
+                class="flex items-center gap-1 text-[#10b981] group-hover:translate-x-2 transition-transform"
+              >
+                <span>live demo</span> <i class="fas fa-arrow-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- right stacked mini cards -->
+        <div class="flex flex-col gap-5">
+          <!-- micro card 1 -->
+          <div
+            class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-5 flex items-center gap-4 card-hover"
+          >
+            <div
+              class="bg-black w-14 h-14 rounded-xl border border-[#10b981]/40 flex items-center justify-center text-3xl text-[#10b981] group-hover:border-white transition-all"
+            >
+              <i class="fab fa-react"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold text-lg">react architect</h4>
+              <p class="text-zinc-400 text-sm">
+                <i class="fas fa-cubes text-[#10b981] mr-1"></i> 8 libs, 3
+                design systems
+              </p>
+            </div>
+          </div>
+          <!-- micro card 2 -->
+          <div
+            class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-5 flex items-center gap-4 card-hover"
+          >
+            <div
+              class="bg-black w-14 h-14 rounded-xl border border-[#10b981]/40 flex items-center justify-center text-3xl text-[#10b981]"
+            >
+              <i class="fas fa-database"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold text-lg">backend · node</h4>
+              <p class="text-zinc-400 text-sm">
+                <i class="fas fa-bolt text-[#10b981] mr-1"></i> 12+ APIs,
+                graphql
+              </p>
+            </div>
+          </div>
+          <!-- micro card 3 -->
+          <div
+            class="bg-zinc-900/80 border border-[#10b981]/30 rounded-2xl p-5 flex items-center gap-4 card-hover animate-border-pulse"
+          >
+            <div
+              class="bg-black w-14 h-14 rounded-xl border-2 border-[#10b981] flex items-center justify-center text-3xl text-[#10b981]"
+            >
+              <i class="fas fa-cloud"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold text-lg">devops · aws</h4>
+              <p class="text-zinc-400 text-sm">
+                <i class="fas fa-server text-[#10b981] mr-1"></i> 5 years infra
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== DIVIDER with animated emerald icon ========== -->
+      <div class="flex items-center gap-4 my-12">
+        <div
+          class="h-[2px] flex-1 bg-gradient-to-r from-transparent via-[#10b981] to-transparent"
+        ></div>
+        <div
+          class="w-12 h-12 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center text-2xl text-[#10b981] rotate-0 hover:rotate-180 transition-all duration-700"
+        >
+          <i class="fas fa-terminal"></i>
+        </div>
+        <div
+          class="h-[2px] flex-1 bg-gradient-to-r from-[#10b981] via-transparent to-transparent"
+        ></div>
+      </div>
+
+      <!-- ========== PROJECT GRID: three interactive cards ========== -->
+      <h3 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+        <span class="w-2 h-6 bg-[#10b981] rounded-full"></span> recent code
+        <span class="text-zinc-500 text-base ml-2"
+          >— black & white, emerald glow</span
+        >
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- card 1 -->
+        <div
+          class="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 card-hover group relative overflow-hidden"
+        >
+          <div
+            class="absolute -right-6 -top-6 w-24 h-24 bg-[#10b981]/5 rounded-full blur-2xl group-hover:bg-[#10b981]/20 transition-all"
+          ></div>
+          <i class="fas fa-code text-3xl text-[#10b981] mb-4"></i>
+          <h4 class="text-xl font-bold flex items-center gap-2">
+            mono<span class="text-[#10b981]">/cli</span>
+          </h4>
+          <p class="text-zinc-400 text-sm mt-2">
+            Developer tool for scaffolding black/white + emerald themes. 2.1k
+            downloads.
+          </p>
+          <div class="flex items-center justify-between mt-5 text-sm">
+            <span class="text-zinc-500"
+              ><i class="far fa-calendar text-[#10b981] mr-1"></i> mar
+              2025</span
+            >
+            <span
+              class="text-[#10b981] group-hover:translate-x-2 transition-transform"
+              ><i class="fas fa-arrow-right"></i> repo</span
+            >
+          </div>
+        </div>
+        <!-- card 2 -->
+        <div
+          class="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 card-hover group relative overflow-hidden"
+        >
+          <div
+            class="absolute -right-6 -top-6 w-24 h-24 bg-[#10b981]/5 rounded-full blur-2xl group-hover:bg-[#10b981]/20 transition-all"
+          ></div>
+          <i class="fas fa-mobile-alt text-3xl text-[#10b981] mb-4"></i>
+          <h4 class="text-xl font-bold flex items-center gap-2">
+            emerald<span class="text-[#10b981]"> ui</span>
+          </h4>
+          <p class="text-zinc-400 text-sm mt-2">
+            React component library – dark first, emerald accents. 42 stars on
+            GitHub.
+          </p>
+          <div class="flex items-center justify-between mt-5 text-sm">
+            <span class="text-zinc-500"
+              ><i class="far fa-calendar text-[#10b981] mr-1"></i> feb
+              2025</span
+            >
+            <span
+              class="text-[#10b981] group-hover:translate-x-2 transition-transform"
+              ><i class="fas fa-arrow-right"></i> storybook</span
+            >
+          </div>
+        </div>
+        <!-- card 3 -->
+        <div
+          class="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 card-hover group relative overflow-hidden"
+        >
+          <div
+            class="absolute -right-6 -top-6 w-24 h-24 bg-[#10b981]/5 rounded-full blur-2xl group-hover:bg-[#10b981]/20 transition-all"
+          ></div>
+          <i class="fas fa-robot text-3xl text-[#10b981] mb-4"></i>
+          <h4 class="text-xl font-bold flex items-center gap-2">
+            api<span class="text-[#10b981]">.emer</span>
+          </h4>
+          <p class="text-zinc-400 text-sm mt-2">
+            GraphQL mesh with emerald‑colored tracing & monitoring.
+          </p>
+          <div class="flex items-center justify-between mt-5 text-sm">
+            <span class="text-zinc-500"
+              ><i class="far fa-calendar text-[#10b981] mr-1"></i> jan
+              2025</span
+            >
+            <span
+              class="text-[#10b981] group-hover:translate-x-2 transition-transform"
+              ><i class="fas fa-arrow-right"></i> docs</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== SKILLS + INTERACTIVE FOOTER / NEWSLETTER ========== -->
+      <div
+        class="mt-14 bg-black/60 border border-[#10b981]/20 rounded-3xl p-7 flex flex-col md:flex-row gap-8 items-center justify-between backdrop-blur-sm"
+      >
+        <!-- left: skill tags with interactive emerald tags -->
+        <div>
+          <h5 class="text-white/70 text-sm flex items-center gap-2 mb-4">
+            <i class="fas fa-cog text-[#10b981] text-base"></i> toolchain /
+            stack
+          </h5>
+          <div class="flex flex-wrap gap-2 max-w-xl">
+            {['react', 'node.js', 'typescript', 'tailwind', 'graphql', 'aws',
+            'docker', 'python', 'next.js', 'mongodb'].map(skill => (
+            <span
+              class="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-full text-sm text-zinc-300 hover:border-[#10b981] hover:text-[#10b981] hover:bg-black transition-all cursor-default flex items-center gap-1"
+            >
+              <i class="fas fa-hashtag text-[10px] opacity-50"></i> {skill}
+            </span>
+            ))}
+          </div>
+        </div>
+        <!-- right: interactive email / call to action -->
+        <div
+          class="bg-zinc-900/80 p-1 pl-4 rounded-full border border-zinc-800 flex items-center gap-2 min-w-[260px] emerald-glow"
+        >
+          <i class="fas fa-envelope-open-text text-[#10b981]"></i>
+          <input
+            type="email"
+            placeholder="dev@portfolio"
+            value="alex@emerald.dev"
+            class="bg-transparent text-white outline-none flex-1 text-sm w-full min-w-0"
+            readonly
+          />
+          <button
+            class="bg-[#10b981] text-black px-5 py-3 rounded-full text-sm font-semibold flex items-center gap-2 hover:bg-white transition-all"
+          >
+            <i class="fas fa-paper-plane"></i>
+            <span class="hidden sm:inline">connect</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- footer with social / meta -->
+      <div
+        class="flex flex-wrap justify-between items-center mt-8 text-zinc-500 text-sm border-t border-white/5 pt-6"
+      >
+        <div class="flex gap-5">
+          <a href="#" class="hover:text-[#10b981] transition-colors"
+            ><i class="fab fa-github text-lg"></i> github/emerald-dev</a
+          >
+          <a href="#" class="hover:text-[#10b981] transition-colors"
+            ><i class="fab fa-linkedin"></i> linkedin</a
+          >
+          <a href="#" class="hover:text-[#10b981] transition-colors"
+            ><i class="fas fa-bolt"></i> emerald stack</a
+          >
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
+          <span>#10b981 · black & white portfolio</span>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

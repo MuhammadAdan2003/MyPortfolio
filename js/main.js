@@ -1,288 +1,220 @@
-// main.js - Complete optimized main entry file
 import { homeInit, homeDestroy } from "./home.js";
 import { skillsInit, skillsDestroy } from "./skills.js";
 import { projectsInit, projectsDestroy } from "./projects.js";
 import { testimonialInit, testimonialDestroy } from "./testimonial.js";
 
-// Global variables
 let lenis = null;
 let currentPage = null;
 let rafId = null;
 let isTransitioning = false;
+let menuTimeline = null;
 
-// =========== navhtml ==========
-
-// ===== 1️⃣ Navbar function definition =====
-
-let navbarHTML = `<div id="navOpen" class="fs-menu-btn cursor-pointer border-2 p-3 border-black bg-gray-50 rounded-2xl">
-        <span id="fir"></span>
-        <span></span>
-        <span></span>
+// ============================================
+// 1. LAYOUT
+// ============================================
+let navbarHTML = `
+<div id="navOpen" class="fs-menu-btn cursor-pointer border-2 p-3 border-black bg-gray-50 rounded-2xl fixed top-5 right-5 z-[100]">
+  <span id="fir"></span>
+  <span></span>
+  <span></span>
+</div>
+<div id="fullnav" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100vh; transform: translate(0px, -105%); z-index: 150;" class="bg-[#111] overflow-hidden">
+  <div id="navClose" class="flex w-100 justify-end text-white p-5 cursor-pointer uppercase tracking-tighter">close</div>
+  <div class="flex h-full">
+    <div id="navLinksContainer" class="flex flex-col gap-8 text-6xl p-20 items-start">
+      <div class="h-[80px] overflow-hidden w-[100%]">
+        <span class="mazius navBarSpans relative inline-block text-white cursor-pointer transition-all duration-300 hover:text-[#10b981] hover:scale-110 hover:-translate-y-1">
+          <a href="index.html" data-img="images/homesccreen.png">Home</a>
+        </span>
+      </div>
+      <div class="h-[80px] overflow-hidden w-[100%]">
+        <span class="mazius navBarSpans relative inline-block text-white cursor-pointer transition-all duration-300 hover:text-[#10b981] hover:scale-110 hover:-translate-y-1">
+          <a href="testimonial.html" data-img="images/testimonials.png">Testimonials</a>
+        </span>
+      </div>
+      <div class="h-[80px] overflow-hidden w-[100%]">
+        <span class="mazius navBarSpans relative inline-block text-white cursor-pointer transition-all duration-300 hover:text-[#10b981] hover:scale-110 hover:-translate-y-1">
+          <a href="projects.html" data-img="images/projects.png">Projects</a>
+        </span>
+      </div>
+      <div class="h-[80px] overflow-hidden w-[100%]">
+        <span class="mazius navBarSpans relative inline-block text-white cursor-pointer transition-all duration-300 hover:text-[#10b981] hover:scale-110 hover:-translate-y-1">
+          <a href="skills.html" data-img="images/skills.png">Skills</a>
+        </span>
+      </div>
     </div>
+    <div class="hidden lg:flex items-center p-20 h-full">
+       <div class="overflow-hidden bg-transparent">          
+          <img id="navImage" src="images/homesccreen.png" class="max-w-full h-auto" alt="Preview" style="opacity: 0;">
+       </div>
+    </div>
+  </div>
+</div>
+`;
 
-    <div id="fullnav" style="transform: translateY(-100%); opacity:0; visibility:hidden;" class="fixed h-screen bg-[#111] z-50">
-        <div id="navClose" class="flex w-100 justify-end text-white p-5">
-            close
-        </div>
-        <div class="flex">
-            <div class="flex flex-col gap-8 text-6xl p-20 items-start">
+// ============================================
+// 2. LOGIC
+// ============================================
 
-                <div class="h-[80px] overflow-hidden w-[100%]">
-                    <span
-                        class="mazius relative inline-block text-white cursor-pointer
-               transition-all duration-300
-               hover:text-[#10b981]
-               hover:scale-110
-               hover:-translate-y-1
-               after:content-['']
-               after:absolute
-               after:left-0
-               after:-bottom-2
-               after:h-[2px]
-               after:w-0
-               after:bg-[#10b981]
-               after:transition-all
-               after:duration-300
-               after:origin-left
-               hover:after:w-full">
-                        <a href="index.html">Home</a>
-                    </span>
-                </div>
+function getActiveImageUrl() {
+  const page = detectPage();
+  const links = document.querySelectorAll("#fullnav a");
+  let activeImg = "images/homesccreen.png";
+  links.forEach((link) => {
+    const href = link.getAttribute("href");
+    const linkPath = href?.split("/").pop().split(".")[0];
+    const isHome = page === "home" && (linkPath === "index" || !linkPath);
+    if (linkPath === page || isHome) {
+      activeImg = link.getAttribute("data-img") || activeImg;
+    }
+  });
+  return activeImg;
+}
 
-                <div class="h-[80px] overflow-hidden w-[100%]">
-                    <span
-                        class="mazius relative inline-block text-white cursor-pointer transition-all duration-300 hover:text-[#10b981] hover:scale-110 hover:-translate-y-1 after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-[#10b981] after:transition-all after:duration-300 after:origin-left hover:after:w-full">
-                        <a href="testimonial.html">Testimonials</a>
-                    </span>
-                </div>
+function updateNavVisuals() {
+  const page = detectPage();
+  const navLinks = document.querySelectorAll("#fullnav a");
+  const navImgElement = document.getElementById("navImage");
+  if (navImgElement) navImgElement.src = getActiveImageUrl();
 
-
-                <div class="h-[80px] overflow-hidden w-[100%]">
-                    <span
-                        class="mazius relative inline-block text-white cursor-pointer transition-all duration-300 hover:text-[#10b981] hover:scale-110 hover:-translate-y-1 after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-[#10b981] after:transition-all after:duration-300 after:origin-left hover:after:w-full">
-                        <a href="projects.html">Projects</a>
-                    </span>
-                </div>
-
-                <div class="h-[80px] overflow-hidden w-[100%]">
-                    <span
-                        class="mazius relative inline-block text-white cursor-pointer transition-all duration-300 hover:text-[#10b981] hover:scale-110 hover:-translate-y-1 after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-[#10b981] after:transition-all after:duration-300 after:origin-left hover:after:w-full">
-                        <a href="skills.html" class="text-inherit">Skills</a>
-                    </span>
-                </div>
-                <div class="h-[80px] overflow-hidden w-[100%]">
-                    <span
-                        class="mazius relative inline-block text-white cursor-pointer transition-all duration-300 hover:text-[#10b981] hover:scale-110 hover:-translate-y-1 after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-[#10b981] after:transition-all after:duration-300 after:origin-left hover:after:w-full">
-                        <a href="#">Blogs</a>
-                    </span>
-                </div>
-            </div>
-            <div class="flex items-center p-20 h-full">
-                <img id="navImage" src="images/homesccreen.png" alt="">
-            </div>
-        </div>
-    </div>`;
+  navLinks.forEach((link) => {
+    const href = link.getAttribute("href");
+    const linkPath = href?.split("/").pop().split(".")[0];
+    const isHome = page === "home" && (linkPath === "index" || !linkPath);
+    if (linkPath === page || isHome) {
+      link.parentElement.classList.add("text-[#10b981]");
+    } else {
+      link.parentElement.classList.remove("text-[#10b981]");
+    }
+  });
+}
 
 function initNavbar() {
-  const navOpen = document.getElementById("navOpen");
-  const navClose = document.getElementById("navClose");
   const fullnav = document.getElementById("fullnav");
-  if (!fullnav || !navOpen || !navClose) return;
-
-  const spans = fullnav.querySelectorAll(".mazius");
+  const spans = document.querySelectorAll(".navBarSpans");
   const navImage = document.getElementById("navImage");
+  const navLinks = document.querySelectorAll("#fullnav a[data-img]");
 
-  // ✅ Ensure hidden on Barba page enter
-  gsap.set(fullnav, { y: "-100%", autoAlpha: 0 }); // hidden
-  gsap.set(spans, { y: 200, opacity: 0 });
-  gsap.set(navImage, { autoAlpha: 0, scale: 0.8 });
+  if (!fullnav) return;
 
-  const menuTimeline = gsap.timeline({ paused: true });
+  gsap.set(fullnav, { y: "-105%" });
+  gsap.set(spans, { y: 150 });
+  gsap.set(navImage, { opacity: 0, scale: 0.9 });
 
+  if (menuTimeline) menuTimeline.kill();
+  menuTimeline = gsap.timeline({ paused: true });
   menuTimeline
-    .to(fullnav, { y: "0%", autoAlpha: 1, duration: 1, ease: "power4.out" })
-    .to(spans, { y: 0, opacity: 1, stagger: 0.15, duration: 1.2, ease: "power4.out", delay: -0.7 })
-    .to(navImage, { autoAlpha: 1, scale: 1, duration: 0.8, ease: "back.out(1.5)", delay: -0.6 });
+    .to(fullnav, { y: "0%", duration: 0.8, ease: "expo.out" })
+    .to(
+      spans,
+      { y: 0, stagger: 0.08, duration: 0.8, ease: "power4.out" },
+      "-=0.8",
+    )
+    .to(navImage, { opacity: 1, scale: 1, duration: 0.8 }, "-=0.7");
 
-  navOpen.addEventListener("click", () => menuTimeline.play());
-  navClose.addEventListener("click", () => menuTimeline.reverse());
-}
-
-// ==========================
-// NAVBAR RENDER FUNCTION
-// ==========================
-function renderNavbar() {
-  // Agar navbar already present hai, return
-  if (document.getElementById("fullnav")) return;
-  // Insert navbar HTML
-  const navbarContainer = document.createElement("div");
-  navbarContainer.innerHTML = navbarHTML;
-  document.body.prepend(navbarContainer);
-  // Initialize animations and click events
-  initNavbar();
-}
-
-
-// ==========================
-// INITIALIZE NAVBAR
-// ==========================
-
-// Direct page load
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
-    renderNavbar(); // always render on first load
-  });
-} else {
-  renderNavbar();
-}
-
-// ==========================
-// BARBA PAGE TRANSITIONS
-// ==========================
-if (typeof barba !== "undefined") {
-  barba.hooks.after(() => {
-    renderNavbar(); // Only inserts & initializes if not present
-  });
-}
-
-// Call on first load
-document.addEventListener("DOMContentLoaded", initNavbar);
-
-// Call after each Barba page load
-if (typeof barba !== "undefined") {
-  barba.hooks.enter(() => {
-    const fullnav = document.getElementById("fullnav");
-    if (fullnav) {
-      gsap.set(fullnav, { y: "-100%", autoAlpha: 0 }); // hide navbar on new page enter
-      const spans = fullnav.querySelectorAll(".mazius");
-      const navImage = document.getElementById("navImage");
-      gsap.set(spans, { y: 200, opacity: 0 });
-      gsap.set(navImage, { autoAlpha: 0, scale: 0.8 });
-    }
-  });
-
-  barba.hooks.after(() => {
-    renderNavbar();  // insert if not already
-    initNavbar();    // always reinit
-  });
-}
-
-
-function initLenis() {
-  // Check if Lenis is loaded
-  if (typeof Lenis === "undefined") {
-    console.warn("⚠️ Lenis library not found");
-    return null;
-  }
-
-  // Destroy existing Lenis if any
-  if (lenis) {
-    try {
-      lenis.destroy();
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
+  navLinks.forEach((link) => {
+    link.addEventListener("mouseenter", () => {
+      const newSrc = link.getAttribute("data-img");
+      if (newSrc && !navImage.src.includes(newSrc)) {
+        gsap.to(navImage, {
+          opacity: 0,
+          x: 20,
+          duration: 0.15,
+          onComplete: () => {
+            navImage.src = newSrc;
+            gsap.to(navImage, { opacity: 1, x: 0, duration: 0.2 });
+          },
+        });
       }
-    } catch (e) {
-      console.log("Cleaning old Lenis instance");
-    }
-  }
-
-  try {
-    // Create Lenis instance with optimized settings
-    lenis = new Lenis({
-      duration: 1.5, // pehle 1.2 → thoda slower for smoothness
-      easing: (t) => 1 - Math.pow(1 - t, 4), // smoother easing curve
-      smooth: true,
-      smoothTouch: true,
-      wheelMultiplier: 1, // same
-      touchMultiplier: 1.2, // pehle 1.5 → slightly smoother touch
-      infinite: false,
     });
-
-    // Connect with GSAP ScrollTrigger if available
-    if (typeof ScrollTrigger !== "undefined") {
-      lenis.on("scroll", ScrollTrigger.update);
-      console.log("✅ Lenis connected with ScrollTrigger");
-    }
-
-    // Optimized RAF loop
-    function raf(time) {
-      if (lenis && typeof lenis.raf === "function") {
-        lenis.raf(time);
+    link.addEventListener("mouseleave", () => {
+      const activeImgSrc = getActiveImageUrl();
+      if (!navImage.src.includes(activeImgSrc)) {
+        gsap.to(navImage, {
+          opacity: 0,
+          duration: 0.15,
+          onComplete: () => {
+            navImage.src = activeImgSrc;
+            gsap.to(navImage, { opacity: 1, duration: 0.2 });
+          },
+        });
       }
-      rafId = requestAnimationFrame(raf);
-    }
-
-    // Start RAF loop
-    rafId = requestAnimationFrame(raf);
-
-    console.log("✅ Lenis smooth scroll initialized");
-    return lenis;
-  } catch (error) {
-    console.error("❌ Failed to initialize Lenis:", error);
-    return null;
-  }
-}
-
-function destroyLenis() {
-  // Cancel RAF loop
-  if (rafId) {
-    cancelAnimationFrame(rafId);
-    rafId = null;
-  }
-
-  // Destroy Lenis instance
-  if (lenis) {
-    try {
-      lenis.destroy();
-      lenis = null;
-      console.log("🗑️ Lenis destroyed");
-    } catch (error) {
-      console.warn("Could not destroy Lenis:", error);
-    }
-  }
+    });
+  });
+  updateNavVisuals();
 }
 
 // ============================================
-// PAGE DETECTION
+// 3. BARBA & TRANSITIONS
 // ============================================
-function detectPage() {
-  // Method 1: Check body data attribute
-  if (document.body.dataset.page) {
-    return document.body.dataset.page;
-  }
 
-  // Method 2: Check URL
-  const path = window.location.pathname;
-  const pageName = path.split("/").pop().split(".")[0];
+if (typeof barba !== "undefined") {
+  barba.init({
+    sync: true,
+    transitions: [
+      {
+        name: "dual-overlay",
+        async leave(data) {
+          isTransitioning = true;
 
-  if (pageName === "skills") return "skills";
-  if (pageName === "projects") return "projects";
-  if (pageName === "testimonial") return "testimonial";
-  if (pageName === "" || pageName === "index" || pageName === "index.html")
-    return "home";
-  return "home";
+          // --- NAVBAR FIX ---
+          // Click hote hi navbar ko foran reset kar do taaki transition ke piche ye na dikhe
+          gsap.set("#fullnav", { y: "-105%" });
+          if (menuTimeline) menuTimeline.progress(0).pause();
+
+          const bO = document.createElement("div");
+          bO.style.cssText = `position:fixed; top:-100%; left:0; width:100%; height:100vh; background:#000; z-index:9998;`;
+          document.body.appendChild(bO);
+          const gO = document.createElement("div");
+          gO.style.cssText = `position:fixed; top:-100%; left:0; width:100%; height:100vh; background:#10b981; z-index:9999;`;
+          document.body.appendChild(gO);
+
+          const tl = gsap.timeline();
+          await tl
+            .to(bO, { top: "0%", duration: 0.6, ease: "power2.inOut" })
+            .to(
+              gO,
+              { top: "0%", duration: 0.4, ease: "power2.inOut" },
+              "-=0.2",
+            );
+
+          destroyPage(currentPage);
+          data.current.container.remove();
+
+          await tl.to([bO, gO], {
+            top: "100%",
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power2.in",
+          });
+
+          bO.remove();
+          gO.remove();
+        },
+        async afterEnter() {
+          isTransitioning = false;
+          renderNavbar();
+          initPage(detectPage()); // Animations yahan trigger hongi taaki element mil jayein
+        },
+        async once() {
+          renderNavbar();
+          initPage(detectPage());
+        },
+      },
+    ],
+  });
 }
 
 // ============================================
-// PAGE INITIALIZATION - OPTIMIZED
+// 4. LIFECYCLE HELPERS
 // ============================================
+
 function initPage(page) {
-  console.log(`🚀 Initializing ${page} page...`);
   currentPage = page;
-
-  // Register GSAP plugins if available
   if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
-    try {
-      gsap.registerPlugin(ScrollTrigger);
-      console.log("✅ GSAP plugins registered");
-    } catch (e) {
-      console.warn("Could not register GSAP plugins:", e);
-    }
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.getAll().forEach((t) => t.kill());
   }
-
-  // Initialize page-specific code
   switch (page) {
     case "home":
       homeInit();
@@ -296,25 +228,15 @@ function initPage(page) {
     case "testimonial":
       testimonialInit();
       break;
-    default:
-      console.warn(`Unknown page: ${page}`);
   }
-
-  // Initialize Lenis after page content is ready
-  setTimeout(() => {
-    initLenis();
-  }, 300);
-
-  // Handle window resize
-  setupResizeHandler();
+  setTimeout(initLenis, 100);
 }
 
 function destroyPage(page) {
-  if (isTransitioning) return;
-
-  console.log(`🧹 Destroying ${page} page...`);
-
-  // Destroy page-specific code
+  if (lenis) {
+    lenis.destroy();
+    lenis = null;
+  }
   switch (page) {
     case "home":
       homeDestroy();
@@ -329,374 +251,37 @@ function destroyPage(page) {
       testimonialDestroy();
       break;
   }
-
-  // Destroy Lenis
-  destroyLenis();
 }
 
-// ============================================
-// RESIZE HANDLER
-// ============================================
-function setupResizeHandler() {
-  let resizeTimeout;
-
-  function handleResize() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      // Refresh ScrollTrigger if available
-      if (typeof ScrollTrigger !== "undefined") {
-        ScrollTrigger.refresh();
-      }
-
-      // Dispatch custom resize event for page-specific handling
-      window.dispatchEvent(
-        new CustomEvent("pageResize", {
-          detail: { page: currentPage },
-        }),
-      );
-    }, 250);
-  }
-
-  window.addEventListener("resize", handleResize);
-
-  // Store handler for cleanup
-  window.appResizeHandler = handleResize;
+function initLenis() {
+  if (typeof Lenis === "undefined") return;
+  lenis = new Lenis({ duration: 1.2, smooth: true });
+  const raf = (time) => {
+    if (lenis) lenis.raf(time);
+    rafId = requestAnimationFrame(raf);
+  };
+  rafId = requestAnimationFrame(raf);
 }
 
-function removeResizeHandler() {
-  if (window.appResizeHandler) {
-    window.removeEventListener("resize", window.appResizeHandler);
-  }
+function detectPage() {
+  const p = window.location.pathname.split("/").pop().split(".")[0];
+  if (["skills", "projects", "testimonial"].includes(p)) return p;
+  return !p || p === "index" ? "home" : "home";
 }
 
-// ============================================
-// OLD BARBA.JS DUAL OVERLAY TRANSITION
-// ============================================
-if (typeof barba !== "undefined" && typeof gsap !== "undefined") {
-  console.log("🌀 Setting up Barba.js with dual overlay transition");
-
-  // Prefetch images for smoother transitions
-  barba.hooks.before(() => {
-    if (isTransitioning) return;
-    isTransitioning = true;
-  });
-
-  barba.hooks.after(() => {
-    isTransitioning = false;
-
-    // Update active navigation
-    updateActiveNav();
-  });
-
-  // Update active navigation
-  function updateActiveNav() {
-    const navLinks = document.querySelectorAll("nav a, .fixed a");
-    const currentPage = detectPage();
-
-    navLinks.forEach((link) => {
-      const href = link.getAttribute("href");
-      if (href) {
-        const linkPage = href.split("/").pop().split(".")[0];
-        if (
-          linkPage === currentPage ||
-          (currentPage === "home" && (linkPage === "" || linkPage === "index"))
-        ) {
-          link.classList.add("text-primary");
-          link.classList.remove("text-white");
-        } else {
-          link.classList.remove("text-primary");
-          link.classList.add("text-white");
-        }
-      }
-    });
+function renderNavbar() {
+  if (!document.getElementById("fullnav")) {
+    const container = document.createElement("div");
+    container.innerHTML = navbarHTML;
+    document.body.prepend(container);
   }
-
-  // Initialize Barba.js with dual overlay transition
-  barba.init({
-    sync: true,
-    debug: false,
-    prefetch: true,
-    timeout: 7000,
-
-    transitions: [
-      {
-        name: "dual-overlay-transition",
-
-        async leave(data) {
-          console.log(`👋 Leaving ${currentPage} page`);
-
-          // Mark as transitioning
-          isTransitioning = true;
-
-          // Destroy current page
-          if (currentPage) {
-            destroyPage(currentPage);
-          }
-
-          // Black overlay - pehle aaye
-          const blackOverlay = document.createElement("div");
-          blackOverlay.className = "black-transition-overlay";
-          blackOverlay.style.cssText = `
-            position: fixed;
-            top: -100%;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: #000;
-            z-index: 9998;
-            pointer-events: none;
-          `;
-          document.body.appendChild(blackOverlay);
-
-          // Black ko neeche layein
-          await gsap.to(blackOverlay, {
-            top: "0%",
-            duration: 0.8,
-            ease: "power2.out",
-          });
-
-          // Green overlay - phir aaye
-          const greenOverlay = document.createElement("div");
-          greenOverlay.className = "green-transition-overlay";
-          greenOverlay.style.cssText = `
-            position: fixed;
-            top: -100%;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: #10b981;
-            z-index: 9999;
-            pointer-events: none;
-          `;
-          document.body.appendChild(greenOverlay);
-
-          // Green ko neeche layein
-          await gsap.to(greenOverlay, {
-            top: "0%",
-            duration: 0.5,
-            ease: "power2.out",
-          });
-
-          // Old page remove
-          if (data.current && data.current.container) {
-            try {
-              data.current.container.remove();
-            } catch (e) {
-              console.warn("Could not remove old container:", e);
-            }
-          }
-
-          // Ab dono NICHE SE shrink ho jaayein
-          // Black pehle shrink ho
-          await gsap.to(blackOverlay, {
-            height: "0",
-            top: "100%",
-            duration: 0.5,
-            ease: "power2.in",
-          });
-
-          // Green phir shrink ho
-          await gsap.to(greenOverlay, {
-            height: "0",
-            top: "100%",
-            duration: 0.5,
-            ease: "power2.in",
-            delay: 0.1,
-          });
-        },
-
-        async enter(data) {
-          console.log("👉 Entering new page");
-
-          // Remove overlays
-          const overlays = document.querySelectorAll(
-            ".black-transition-overlay, .green-transition-overlay",
-          );
-          overlays.forEach((el) => {
-            if (el && el.parentNode) {
-              el.parentNode.removeChild(el);
-            }
-          });
-
-          // Show new page with fade in
-          if (data.next && data.next.container) {
-            data.next.container.style.opacity = "0";
-            await gsap.to(data.next.container, {
-              opacity: 1,
-              duration: 0.6,
-              ease: "power2.out",
-            });
-          }
-
-          // Initialize new page
-          const page = detectPage();
-          initPage(page);
-
-          // Update transition state
-          isTransitioning = false;
-        },
-
-        async once(data) {
-          console.log("🌟 First page load");
-          const page = detectPage();
-          initPage(page);
-          updateActiveNav();
-        },
-
-        sync: false,
-      },
-    ],
-  });
-
-  // Handle clicks during transition
-  document.addEventListener(
-    "click",
-    (e) => {
-      if (isTransitioning) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    },
-    true,
-  );
-} else {
-  console.log("🚫 Barba.js not available, using direct initialization");
-
-  // Direct initialization without Barba
-  function directInit() {
-    console.log("📋 Direct initialization started");
-
-    const page = detectPage();
-    console.log("📄 Detected page:", page);
-
-    initPage(page);
-
-    // Update navigation for direct load
-    setTimeout(() => {
-      const navLinks = document.querySelectorAll("nav a, .fixed a");
-      navLinks.forEach((link) => {
-        const href = link.getAttribute("href");
-        if (href) {
-          const linkPage = href.split("/").pop().split(".")[0];
-          if (
-            linkPage === page ||
-            (page === "home" && (linkPage === "" || linkPage === "index"))
-          ) {
-            link.classList.add("text-primary");
-            link.classList.remove("text-white");
-          }
-        }
-      });
-    }, 100);
-
-    console.log(`✅ ${page} page initialized directly`);
-  }
-
-  // Initialize when DOM is ready
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", directInit);
-  } else {
-    directInit();
-  }
+  initNavbar();
 }
 
-// ============================================
-// GLOBAL CLEANUP
-// ============================================
-window.addEventListener("beforeunload", () => {
-  if (currentPage) {
-    destroyPage(currentPage);
-  }
-  removeResizeHandler();
+document.addEventListener("click", (e) => {
+  if (e.target.closest("#navOpen")) menuTimeline?.play();
+  if (e.target.closest("#navClose")) menuTimeline?.reverse();
 });
 
-// ============================================
-// ERROR HANDLING
-// ============================================
-window.addEventListener("error", (event) => {
-  console.error("🚨 Global error caught:", event.error);
-
-  // Don't break the page on non-critical errors
-  if (event.error.message && event.error.message.includes("Lenis")) {
-    console.warn("Lenis error, continuing without smooth scroll");
-    event.preventDefault();
-  }
-});
-
-// ============================================
-// DEBUGGING & EXPORTS
-// ============================================
-// Show debug info after load
-setTimeout(() => {
-  console.log("=== APP DEBUG INFO ===");
-  console.log("Current Page:", currentPage);
-  console.log("Body data-page:", document.body.dataset.page);
-  console.log("GSAP:", typeof gsap);
-  console.log("ScrollTrigger:", typeof ScrollTrigger);
-  console.log("Lenis:", typeof Lenis);
-  console.log("Matter.js:", typeof Matter);
-  console.log("Barba.js:", typeof barba);
-  console.log("Is Transitioning:", isTransitioning);
-}, 1000);
-
-// Export for debugging and manual control
-window.app = {
-  // Core functions
-  initLenis,
-  destroyLenis,
-  initPage: (page) => {
-    if (page) initPage(page);
-    else initPage(detectPage());
-  },
-  destroyPage: (page) => {
-    if (page) destroyPage(page);
-    else if (currentPage) destroyPage(currentPage);
-  },
-  detectPage,
-
-  // State
-  currentPage: () => currentPage,
-  isTransitioning: () => isTransitioning,
-
-  // Manual page switching (for debugging)
-  goToPage: (pageName) => {
-    if (isTransitioning) {
-      console.warn("Cannot switch page during transition");
-      return;
-    }
-
-    const pages = ["home", "skills", "projects", "testimonial"];
-    if (pages.includes(pageName)) {
-      window.location.href = `${pageName}.html`;
-    } else {
-      console.error(`Invalid page: ${pageName}`);
-    }
-  },
-};
-
-// Quick test function
-window.testApp = () => {
-  console.log("🧪 Testing app...");
-  console.log("Current page:", window.app.currentPage());
-  console.log("Lenis active:", !!lenis);
-  console.log("GSAP available:", typeof gsap !== "undefined");
-};
-
-console.log("🎉 Main.js loaded successfully");
-console.log("🔧 Use window.app for debugging and control");
-
-document.addEventListener("DOMContentLoaded", function () {
-  const fsMenu = document.querySelector(".fs-menu");
-
-  if (fsMenu) {
-    // Add click events to both buttons
-    const buttons = document.querySelectorAll(".fs-close-btn, .fs-menu-btn");
-
-    buttons.forEach(function (button) {
-      button.addEventListener("click", function () {
-        fsMenu.classList.toggle("active");
-        console.log("click hua h ");
-      });
-    });
-  }
-});
+renderNavbar();
+if (typeof barba === "undefined") initPage(detectPage());
