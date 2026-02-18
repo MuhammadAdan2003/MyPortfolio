@@ -69,6 +69,8 @@ export default function initMatterJS() {
     { id: "uiux", img: "images/logos/design.png" },
     { id: "gsap", img: "images/logos/gsap.png" },
     { id: "jquery", img: "images/logos/jquery.svg" },
+    { id: "Ai", img: "images/logos/Ai.png" },
+    { id: "Api", img: "images/logos/Api.png" },
   ];
 
   const loadedLogos = {};
@@ -129,31 +131,36 @@ export default function initMatterJS() {
     Composite.add(engine.world, physicsElements);
   }
 
-  // 5. SPLIT TEXT ANIMATION
+  // FIXED ANIMATION LOGIC
   function animateHeading() {
     const titles = document.querySelectorAll(".hero-title");
+    
     titles.forEach((title) => {
       const text = title.innerText;
       title.innerHTML = text
         .split("")
-        .map(
-          (char) =>
-            `<span class="char" style="display:inline-block">${char === " " ? "&nbsp;" : char}</span>`,
-        )
+        .map(char => `<span class="char">${char === " " ? "&nbsp;" : char}</span>`)
         .join("");
     });
 
-    gsap
-      .timeline()
-      .from(".char", {
-        y: 150,
-        rotate: 15,
-        stagger: 0.04,
-        duration: 1.2,
-        ease: "expo.out",
-        delay: 0.3,
-      })
-      .from(".hero-para", { opacity: 0, y: 20, duration: 0.8 }, "-=0.8");
+    // Pehle elements ko opacity 1 karo (CSS mein 0 tha)
+    gsap.set(".hero-title, .hero-para-skill", { opacity: 1 });
+
+    const tl = gsap.timeline();
+    tl.from(".char", {
+      y: 150,
+      rotate: 15,
+      stagger: 0.04,
+      duration: 1.2,
+      ease: "expo.out",
+      delay: 0.5
+    })
+    .from(".hero-para-skill", { 
+      opacity: 0, 
+      y: 20, 
+      duration: 1,
+      ease: "power3.out" 
+    }, "-=0.8");
   }
 
   // 6. RENDER CUSTOM CONTENT

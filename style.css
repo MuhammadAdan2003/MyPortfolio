@@ -405,38 +405,48 @@ h1 {
   background: #fdfdfd;
 }
 
+/* Canvas ko absolute kiya taaki text upar aa sake */
+#physics-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
 .content-overlay {
   position: absolute;
-  top: 20%;
+  top: 50%; /* 20% se 50% kiya taaki center mein dikhe */
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  z-index: 10;
+  /* z-index: 10; */
   pointer-events: none;
   width: 100%;
 }
 
 .header-container {
-  overflow: hidden; /* Characters ko niche se reveal karne ke liye */
+  overflow: hidden; 
 }
 
 .hero-title {
-  font-size: clamp(3rem, 12vw, 8rem);
+  font-size: clamp(2.5rem, 10vw, 7rem);
   font-weight: 900;
   margin: 0;
   color: #111;
   text-transform: uppercase;
   line-height: 0.9;
+  /* Start hidden to prevent flash */
+  opacity: 0; 
 }
 
-/* Letters ki styling */
 .char {
   display: inline-block;
   will-change: transform;
 }
 
-.hero-para {
+.hero-para-skill {
   font-size: clamp(0.9rem, 3vw, 1.4rem);
   color: #444;
   margin-top: 15px;
+  opacity: 0;
 }
