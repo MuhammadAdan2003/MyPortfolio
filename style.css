@@ -397,3 +397,46 @@ h1 {
 }
 
 
+#simulation-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #fdfdfd;
+}
+
+.content-overlay {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+  width: 100%;
+}
+
+.header-container {
+  overflow: hidden; /* Characters ko niche se reveal karne ke liye */
+}
+
+.hero-title {
+  font-size: clamp(3rem, 12vw, 8rem);
+  font-weight: 900;
+  margin: 0;
+  color: #111;
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+
+/* Letters ki styling */
+.char {
+  display: inline-block;
+  will-change: transform;
+}
+
+.hero-para {
+  font-size: clamp(0.9rem, 3vw, 1.4rem);
+  color: #444;
+  margin-top: 15px;
+}
