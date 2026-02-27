@@ -201,9 +201,8 @@ if (typeof barba !== "undefined") {
 
             if (nextNamespace === "projects") {
               newPath = "css/project.css";
-            }
-            else{
-                newPath = "css/style.css";
+            } else {
+              newPath = "css/style.css";
             }
 
             cssLinkElem.setAttribute("href", newPath);
@@ -212,6 +211,11 @@ if (typeof barba !== "undefined") {
           }
         },
         async afterEnter() {
+          await new Promise(resolve => setTimeout(resolve, 500));
+
+      // 2. ScrollTrigger ko refresh karein TAAKI container size calculate ho jaye
+      ScrollTrigger.refresh();
+      console.log("ScrollTrigger Refreshed");
           isTransitioning = false;
           renderNavbar();
           initPage(detectPage()); // Animations yahan trigger hongi taaki element mil jayein
