@@ -2,6 +2,7 @@ import { homeInit, homeDestroy } from "./home.js";
 import { skillsInit, skillsDestroy } from "./skills.js";
 import { projectsInit, projectsDestroy } from "./projects.js";
 import { testimonialInit, testimonialDestroy } from "./testimonial.js";
+import { detailPageInit } from "./details.js";
 
 let lenis = null;
 let currentPage = null;
@@ -154,22 +155,46 @@ if (typeof barba !== "undefined") {
     transitions: [
       {
         name: "dual-overlay",
+        // --- main.js (Merged Function) ---
+
         async leave(data) {
           isTransitioning = true;
 
-          // --- NAVBAR FIX ---
-          // Click hote hi navbar ko foran reset kar do taaki transition ke piche ye na dikhe
-          gsap.set("#fullnav", { y: "-105%" });
-          if (menuTimeline) menuTimeline.progress(0).pause();
+          // 1. CSS jaldi switch karein taake nayi CSS load ho jaye
+          const nextNamespace = data.next.namespace || detectPage();
+          console.log("DEBUG: Target Page is ->", nextNamespace);
 
+          const cssLinkElem = document.getElementById("cssLink");
+          if (cssLinkElem) {
+            let newPath;
+
+            if (nextNamespace === "headphonesSide") {
+              console.log("heloo");
+            } else if (nextNamespace === "projects") {
+              newPath = "css/project.css";
+            } else {
+              newPath = "css/style.css";
+            }
+            setTimeout(() => {
+              cssLinkElem.setAttribute("href", newPath);              
+            }, 1000);
+          } else {
+            console.error("Critical: #cssLink not found in DOM");
+          }
+
+          // 2. Overlay Elements banayein
           const bO = document.createElement("div");
           bO.style.cssText = `position:fixed; top:-100%; left:0; width:100%; height:100vh; background:#000; z-index:9998;`;
           document.body.appendChild(bO);
+
           const gO = document.createElement("div");
           gO.style.cssText = `position:fixed; top:-100%; left:0; width:100%; height:100vh; background:#10b981; z-index:9999;`;
           document.body.appendChild(gO);
 
+          // 3. Animation Timeline
           const tl = gsap.timeline();
+
+          // Screen cover karein
           await tl
             .to(bO, { top: "0%", duration: 0.6, ease: "power2.inOut" })
             .to(
@@ -178,43 +203,33 @@ if (typeof barba !== "undefined") {
               "-=0.2",
             );
 
+          // 4. 🔥 NAVBAR FIX: Jab screen cover ho jaye tab navbar hide karein
+          gsap.set("#fullnav", { y: "-105%" });
+          if (menuTimeline) menuTimeline.progress(0).pause();
+
+          // Page Cleanup
           destroyPage(currentPage);
           data.current.container.remove();
 
+          // 5. Exit animation (Screen khulegi)
           await tl.to([bO, gO], {
             top: "100%",
             duration: 0.5,
             stagger: 0.1,
             ease: "power2.in",
           });
+
+          // Cleanup overlays
           bO.remove();
           gO.remove();
         },
-        async beforeEnter(data) {
-          const nextNamespace = data.next.namespace || detectPage(); // Fallback agar namespace miss ho
-          console.log("DEBUG: Target Page is ->", nextNamespace);
 
-          const cssLinkElem = document.getElementById("cssLink");
-          if (cssLinkElem) {
-            let newPath;
-
-            if (nextNamespace === "projects") {
-              newPath = "css/project.css";
-            } else {
-              newPath = "css/style.css";
-            }
-
-            cssLinkElem.setAttribute("href", newPath);
-          } else {
-            console.error("Critical: #cssLink not found in DOM");
-          }
-        },
         async afterEnter() {
-          await new Promise(resolve => setTimeout(resolve, 500));
+          await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // 2. ScrollTrigger ko refresh karein TAAKI container size calculate ho jaye
-      ScrollTrigger.refresh();
-      console.log("ScrollTrigger Refreshed");
+          // 2. ScrollTrigger ko refresh karein TAAKI container size calculate ho jaye
+          ScrollTrigger.refresh();
+          console.log("ScrollTrigger Refreshed");
           isTransitioning = false;
           renderNavbar();
           initPage(detectPage()); // Animations yahan trigger hongi taaki element mil jayein
@@ -250,6 +265,9 @@ function initPage(page) {
       break;
     case "testimonial":
       testimonialInit();
+      break
+    case "detail":
+      detailPageInit();
       break;
   }
   setTimeout(initLenis, 100);
@@ -288,7 +306,8 @@ function initLenis() {
 
 function detectPage() {
   const p = window.location.pathname.split("/").pop().split(".")[0];
-  if (["skills", "projects", "testimonial"].includes(p)) return p;
+  if (p.startsWith("details")) return "details";
+  if (["skills", "projects", "testimonial" ].includes(p)) return p;
   return !p || p === "index" ? "home" : "home";
 }
 

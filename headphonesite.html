@@ -11,225 +11,135 @@
       href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,700&family=Inter:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <style>
-      body {
-        background: #000;
-        color: #fff;
-        font-family: "Inter", sans-serif;
-        overflow-x: hidden;
-      }
-      .mazius {
-        font-family: "Lora", serif;
-        font-style: italic;
-      }
-
-      ::-webkit-scrollbar {
-        width: 3px;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #333;
-        border-radius: 10px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #000;
-      }
-
-      .animated-line {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-
-      .img-box {
-        position: relative;
-        width: 100%;
-        overflow: hidden;
-        background: #0a0a0a;
-        border-radius: 4px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-      }
-
-      .img-box img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      /* Fixed Left Side on Desktop */
-      @media (min-width: 1024px) {
-        .sticky-content {
-          position: sticky;
-          top: 10vh;
-          height: 80vh;
-        }
-      }
-    </style>
+<link id="cssLink" rel="stylesheet" href="css/detailProject.css">
   </head>
   <body class="antialiased">
-    <div
-      class="fixed top-0 left-0 h-[2px] bg-white z-[1000] w-0"
-      id="progress"
-    ></div>
+    <main data-barba="wrapper">
+      <div
+        data-barba="container"
+        data-barba-namespace="details"
+        class="page-content"
+      >
+        <div
+          class="fixed top-0 left-0 h-[2px] bg-white z-[1000] w-0"
+          id="progress"
+        ></div>
 
-    <main
-      class="w-full max-w-[1700px] mx-auto px-6 lg:px-12 py-10 lg:py-20 pb-20"
-    >
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-        <div class="lg:col-span-5">
-          <div class="sticky-content flex flex-col justify-between">
-            <div>
-              <h1
-                class="text-6xl md:text-7xl lg:text-8xl mazius leading-[0.9] mb-10 animated-line"
-              >
-                Headphones
-              </h1>
-
-              <div class="space-y-8 border-t border-white/10 pt-10">
-                <div class="space-y-4 animated-line">
-                  <p
-                    class="text-zinc-500 text-[11px] uppercase tracking-[0.2em]"
+        <main
+          class="w-full max-w-[1700px] mx-auto px-6 lg:px-12 py-10 2xl:py-20 pb-20"
+        >
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+            <div class="lg:col-span-5">
+              <div class="sticky-content flex flex-col justify-between">
+                <div>
+                  <h1
+                    class="text-6xl 2xl:text-7xl lg:text-5xl mazius leading-[1.5] 2xl:mb-10 mb-4 animated-line"
                   >
-                    About Project
-                  </p>
-                  <p class="text-zinc-300 leading-relaxed text-sm max-w-md">
-                    A modern e-commerce platform built for a fictional luxury
-                    brand. The goal was to break away from traditional grid
-                    layouts and create a cinematic experience using GSAP for
-                    scroll-triggered animations.
-                  </p>
+                    Headphones Website Clone
+                  </h1>
+
+                  <div
+                    class="space-y-8 border-t border-white/10 2xl:pt-10 pt-4"
+                  >
+                    <div class="space-y-4 animated-line">
+                      <p
+                        class="text-zinc-500 text-[11px] uppercase tracking-[0.2em]"
+                      >
+                        About Project
+                      </p>
+                      <p
+                        class="text-zinc-300 leading-relaxed text-sm max-w-md h-[30vh] overflow-auto"
+                      >
+                        This is a modern e-commerce platform designed for a
+                        fictional luxury brand, created to break away from
+                        conventional grid-based layouts and deliver a truly
+                        cinematic browsing experience. The project leverages
+                        GSAP for smooth, scroll-triggered animations, adding a
+                        dynamic and immersive feel to every interaction. Built
+                        with HTML, JavaScript, and Tailwind CSS, the platform is
+                        fully responsive, ensuring flawless performance and
+                        visual consistency across all devices and screen sizes.
+                        Every element, from product displays to navigation, has
+                        been carefully crafted to blend aesthetics with
+                        functionality, offering users an engaging and intuitive
+                        shopping journey that feels both luxurious and
+                        interactive.
+                      </p>
+                    </div>
+
+                    <div class="flex gap-10 animated-line">
+                      <div>
+                        <p
+                          class="text-zinc-500 text-[10px] uppercase tracking-widest mb-1"
+                        >
+                          Year
+                        </p>
+                        <p class="text-sm">2024</p>
+                      </div>
+                      <div>
+                        <p
+                          class="text-zinc-500 text-[10px] uppercase tracking-widest mb-1"
+                        >
+                          Stack
+                        </p>
+                        <p class="text-sm">HTML , Tailwindcss , JavaScript</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div class="flex gap-10 animated-line">
-                  <div>
-                    <p
-                      class="text-zinc-500 text-[10px] uppercase tracking-widest mb-1"
+                <div class="animated-line pt-10 lg:pt-0">
+                  <a
+                    href="https://adorable-beijinho-f22ad7.netlify.app/"
+                    target="_blank"
+                    class="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] bg-white text-black px-6 py-3 rounded-full hover:bg-zinc-200 transition"
+                  >
+                    View Live
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
-                      Year
-                    </p>
-                    <p class="text-sm">2026</p>
-                  </div>
-                  <div>
-                    <p
-                      class="text-zinc-500 text-[10px] uppercase tracking-widest mb-1"
-                    >
-                      Stack
-                    </p>
-                    <p class="text-sm">React.js, GSAP</p>
-                  </div>
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </a>
                 </div>
               </div>
             </div>
 
-            <div class="animated-line pt-10 lg:pt-0">
-              <a
-                href="#"
-                target="_blank"
-                class="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] bg-white text-black px-6 py-3 rounded-full hover:bg-zinc-200 transition"
-              >
-                View Live
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-4 h-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
-              </a>
+            <div class="lg:col-span-7 space-y-12 lg:space-y-20">
+              <div class="img-box aspect-video animate-img">
+                <img src="images/Projects/headphonesMain.png" alt="Main" />
+              </div>
+              <div class="img-box aspect-video animate-img">
+                <img src="images/Projects/headphones2.png" alt="Side" />
+              </div>
+              <div class="img-box aspect-video animate-img">
+                <img src="images/Projects/headphones3.png" alt="UI" />
+              </div>
+              <div class="img-box aspect-video animate-img">
+                <img src="images/Projects/headphones4.png" alt="Detail 1" />
+              </div>
+              <div class="img-box aspect-video animate-img">
+                <img src="images/Projects/headphones5.png" alt="Lifestyle" />
+              </div>
             </div>
           </div>
-        </div>
+        </main>
 
-        <div class="lg:col-span-7 space-y-12 lg:space-y-20">
-          <div class="img-box aspect-video animate-img">
-            <img src="images/Projects/headphonesMain.png" alt="Main" />
-          </div>
-          <div class="img-box aspect-[3/4] animate-img">
-            <img src="images/Projects/headphonesSide.png" alt="Side" />
-          </div>
-          <div class="img-box aspect-video animate-img">
-            <img src="images/Projects/headphonesUi.png" alt="UI" />
-          </div>
-          <div class="img-box aspect-square animate-img">
-            <img src="images/Projects/h1.jpg" alt="Detail 1" />
-          </div>
-          <div class="img-box aspect-video animate-img">
-            <img
-              src="images/Projects/headphonesLifestyle.png"
-              alt="Lifestyle"
-            />
-          </div>
-        </div>
+        <div
+          class="fixed inset-0 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"
+        ></div>
       </div>
     </main>
 
-    <div
-      class="fixed inset-0 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"
-    ></div>
-
-    <script>
-      gsap.registerPlugin(ScrollTrigger);
-
-      // Page Load Animation
-      window.addEventListener("load", () => {
-        gsap.to(".animated-line", {
-          opacity: 1,
-          y: 0,
-          stagger: 0.15,
-          duration: 0.8,
-          ease: "power3.out",
-        });
-      });
-
-      // Scroll Progress
-      gsap.to("#progress", {
-        width: "100%",
-        ease: "none",
-        scrollTrigger: { scrub: 0.3 },
-      });
-
-      // Image Reveal
-      const images = gsap.utils.toArray(".animate-img");
-      images.forEach((imgBox) => {
-        const img = imgBox.querySelector("img");
-
-        gsap.fromTo(
-          img,
-          { scale: 1.15 },
-          {
-            scale: 1,
-            duration: 1.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: imgBox,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          },
-        );
-        gsap.fromTo(
-          imgBox,
-          { clipPath: "inset(100% 0% 0% 0%)" },
-          {
-            clipPath: "inset(0% 0% 0% 0%)",
-            duration: 1,
-            ease: "power4.inOut",
-            scrollTrigger: {
-              trigger: imgBox,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          },
-        );
-      });
-    </script>
+   <script type="module" src="js/main.js"></script>
   </body>
 </html>

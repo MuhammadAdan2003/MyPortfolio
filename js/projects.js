@@ -32,16 +32,6 @@ class FinalSlider {
       this.el.style.setProperty("--img-prev", `url(${initialPath})`);
     }
 
-    // --- BUTTON CLICK FIX ---
-    // Listener ko yahan init mein hona chahiye taake page load hote hi kaam kare
-    this.el.querySelectorAll('.view-details-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Slider change hone se rokta hai
-        e.preventDefault();
-        console.log("Button Clicked!");
-        alert("Project Details Opening...");
-      });
-    });
 
     // Event Listeners
     if (this.nextBtn) this.nextBtn.addEventListener("click", this.next);
