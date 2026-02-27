@@ -187,7 +187,6 @@ if (typeof barba !== "undefined") {
             stagger: 0.1,
             ease: "power2.in",
           });
-
           bO.remove();
           gO.remove();
         },
