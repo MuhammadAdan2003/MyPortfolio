@@ -1,85 +1,146 @@
-// projects.js
-export function projectsInit() {
-  console.log("📁 Projects page initialization");
+let sliderInstance = null;
 
-  // Filter functionality
-  const filterButtons = document.querySelectorAll(".filter-btn");
-  const projectCards = document.querySelectorAll(".project-card");
+class FinalSlider {
+  constructor(el) {
+    this.el = el;
+    this.content = el.querySelector("#slider-content");
+    this.images = el.querySelectorAll(".slider__images-item");
+    this.texts = el.querySelectorAll(".slider__text-item");
+    this.links = el.querySelectorAll(".side-link");
 
-  function handleFilterClick() {
-    // Update active button
-    filterButtons.forEach((btn) => btn.classList.remove("active"));
-    this.classList.add("active");
+    this.nextBtn = el.querySelector("#nextBtn");
+    this.prevBtn = el.querySelector("#prevBtn");
+    this.rightArea = el.querySelector("#right-area");
+    this.leftArea = el.querySelector("#left-area");
 
-    const filterValue = this.getAttribute("data-filter");
+    this.current = 1;
+    this.isMoving = false;
 
-    // Show/hide projects based on filter
-    projectCards.forEach((card) => {
-      if (
-        filterValue === "all" ||
-        card.getAttribute("data-category") === filterValue
-      ) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.next = this.next.bind(this);
+    this.prev = this.prev.bind(this);
+
+    this.init();
+  }
+
+  init() {
+    // INITIAL LOAD: Pehli image ko background mein set karna
+    const firstImg = this.images[0].querySelector("img");
+    if (firstImg) {
+      // Direct .src use karein (Absolute path)
+      const initialPath = firstImg.src;
+      this.el.style.setProperty("--img-prev", `url(${initialPath})`);
+    }
+
+    // --- BUTTON CLICK FIX ---
+    // Listener ko yahan init mein hona chahiye taake page load hote hi kaam kare
+    this.el.querySelectorAll('.view-details-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Slider change hone se rokta hai
+        e.preventDefault();
+        console.log("Button Clicked!");
+        alert("Project Details Opening...");
+      });
+    });
+
+    // Event Listeners
+    if (this.nextBtn) this.nextBtn.addEventListener("click", this.next);
+    if (this.prevBtn) this.prevBtn.addEventListener("click", this.prev);
+    if (this.rightArea) this.rightArea.addEventListener("click", this.next);
+    if (this.leftArea) this.leftArea.addEventListener("click", this.prev);
+
+    this.links.forEach((l) => {
+      l.addEventListener("click", () => this.goTo(parseInt(l.dataset.id)));
+    });
+
+    window.addEventListener("mousemove", this.handleMouseMove);
+  }
+
+  handleMouseMove(e) {
+    if (!this.content || !this.el) return;
+    const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+    const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+
+    gsap.to(this.content, {
+      rotateY: x * 15,
+      rotateX: y * -15,
+      translateZ: "8vw",
+      duration: 0.8,
+      ease: "power2.out",
+      overwrite: "auto",
     });
   }
 
-  // Add hover effects
-  function handleCardMouseEnter() {
-    this.style.boxShadow =
-      "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)";
+  next() {
+    this.goTo(this.current + 1);
+  }
+  prev() {
+    this.goTo(this.current - 1);
   }
 
-  function handleCardMouseLeave() {
-    this.style.boxShadow = "";
+  goTo(id) {
+    if (this.isMoving || !this.el) return;
+
+    if (id > this.images.length) id = 1;
+    if (id < 1) id = this.images.length;
+
+    this.isMoving = true;
+
+    const nextImg = this.images[id - 1].querySelector("img");
+    if (!nextImg) return;
+
+    const nextUrl = nextImg.src; // Full path
+
+    // 1. Nayi image ko background variable mein dalein
+    this.el.style.setProperty("--img-next", `url(${nextUrl})`);
+
+    // 2. CSS class add karein (Taake opacity switch ho)
+    this.el.classList.add("slider--bg-next");
+
+    // UI Updates
+    this.images.forEach((i) =>
+      i.classList.remove("slider__images-item--active"),
+    );
+    this.texts.forEach((t) => t.classList.remove("slider__text-item--active"));
+    this.links.forEach((l) => l.classList.remove("active"));
+
+    this.timeout = setTimeout(() => {
+      if (!this.el) return;
+
+      this.images[id - 1].classList.add("slider__images-item--active");
+      this.texts[id - 1].classList.add("slider__text-item--active");
+      this.links[id - 1].classList.add("active");
+
+      // 3. Purani image ko update karein aur class hatayein
+      this.el.style.setProperty("--img-prev", `url(${nextUrl})`);
+      this.el.classList.remove("slider--bg-next");
+
+      this.current = id;
+      this.isMoving = false;
+    }, 600);
+    
   }
 
-  // Add event listeners
-  filterButtons.forEach((button) => {
-    button.addEventListener("click", handleFilterClick);
-  });
+  destroy() {
+    window.removeEventListener("mousemove", this.handleMouseMove);
+    if (this.content) gsap.killTweensOf(this.content);
+    clearTimeout(this.timeout);
+    this.el = null;
+  }
+}
 
-  projectCards.forEach((card) => {
-    card.addEventListener("mouseenter", handleCardMouseEnter);
-    card.addEventListener("mouseleave", handleCardMouseLeave);
-  });
-
-  // Store for cleanup
-  window.projectsHandlers = {
-    handleFilterClick: handleFilterClick,
-    handleCardMouseEnter: handleCardMouseEnter,
-    handleCardMouseLeave: handleCardMouseLeave,
-  };
-
-  console.log("✅ Projects page initialized");
+export function projectsInit() {
+  const sliderEl = document.querySelector(
+    '[data-barba-namespace="projects"] #slider',
+  );
+  if (!sliderEl) return;
+  if (sliderInstance) sliderInstance.destroy();
+  sliderInstance = new FinalSlider(sliderEl);
 }
 
 export function projectsDestroy() {
-  console.log("🧹 Projects page cleanup");
-
-  // Clean up event listeners
-  const filterButtons = document.querySelectorAll(".filter-btn");
-  const projectCards = document.querySelectorAll(".project-card");
-
-  filterButtons.forEach((button) => {
-    button.removeEventListener(
-      "click",
-      window.projectsHandlers?.handleFilterClick,
-    );
-  });
-
-  projectCards.forEach((card) => {
-    card.removeEventListener(
-      "mouseenter",
-      window.projectsHandlers?.handleCardMouseEnter,
-    );
-    card.removeEventListener(
-      "mouseleave",
-      window.projectsHandlers?.handleCardMouseLeave,
-    );
-  });
-
-  console.log("✅ Projects page cleaned up");
+  if (sliderInstance) {
+    sliderInstance.destroy();
+    sliderInstance = null;
+  }
 }

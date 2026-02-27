@@ -18,7 +18,7 @@ let navbarHTML = `
   <span></span>
   <span></span>
 </div>
-<div id="fullnav" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100vh; transform: translate(0px, -105%); z-index: 150;" class="bg-[#111] overflow-hidden">
+<div id="fullnav" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100vh; transform: translate(0px, -110%); z-index: 150;" class="bg-[#111] overflow-hidden">
   <div id="navClose" class="flex w-100 justify-end text-white p-5 cursor-pointer uppercase tracking-tighter">close</div>
   <div class="flex h-full">
     <div id="navLinksContainer" class="flex flex-col gap-8 text-6xl p-20 items-start">
@@ -190,6 +190,26 @@ if (typeof barba !== "undefined") {
 
           bO.remove();
           gO.remove();
+        },
+        async beforeEnter(data) {
+          const nextNamespace = data.next.namespace || detectPage(); // Fallback agar namespace miss ho
+          console.log("DEBUG: Target Page is ->", nextNamespace);
+
+          const cssLinkElem = document.getElementById("cssLink");
+          if (cssLinkElem) {
+            let newPath;
+
+            if (nextNamespace === "projects") {
+              newPath = "css/project.css";
+            }
+            else{
+                newPath = "css/style.css";
+            }
+
+            cssLinkElem.setAttribute("href", newPath);
+          } else {
+            console.error("Critical: #cssLink not found in DOM");
+          }
         },
         async afterEnter() {
           isTransitioning = false;

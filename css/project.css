@@ -1,0 +1,174 @@
+:root {
+  --z-distance: 8.519vw;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #000;
+  /* font-family: "Open Sans", sans-serif; */
+  color: white;
+}
+@font-face {
+  font-family: "mazius";
+  /* Shuru mein / lagane se rasta fix ho jata hai, chahe CSS kahin bhi ho */
+  src: url("/mazius_display/MaziusDisplay/Mazius Display Extraitalic.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "gilroy-bold";
+  src: url("/gilroy-bold/Gilroy-Bold.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "gilroy";
+  src: url("/gilroy-bold/Gilroy-Medium.ttf") format("opentype");
+}
+
+.mazius {
+  font-family: "mazius";
+}
+
+.gilroy-bold {
+  font-family: "gilroy-bold";
+}
+
+.gilroy {
+  font-family: "gilroy";
+}
+
+.bg-primary {
+  background-color: var(--color-primary) !important;
+}
+
+.text-primary {
+  color: var(--color-primary) !important;
+}
+/* Background */
+.slider::before,
+.slider::after {
+  content: "";
+  position: absolute;
+  inset: -2vw;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  transition: opacity 0.8s ease;
+  filter: brightness(0.4) blur(10px);
+}
+.slider::before {
+  background-image: var(--img-prev);
+}
+.slider::after {
+  background-image: var(--img-next);
+  opacity: 0;
+}
+.slider--bg-next::after {
+  opacity: 1;
+}
+
+/* 3D Scene */
+.slider-wrapper {
+  perspective: 1500px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.slider__content {
+  position: relative;
+  margin: auto;
+  transform-style: preserve-3d;
+  transform: translateZ(var(--z-distance));
+  transition: transform 0.1s ease-out;
+}
+
+/* Images Layer */
+.slider__images {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  z-index: 10; /* Lower than text */
+}
+.slider__images-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.slider__images-item--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Text Layer - FORCED FRONT */
+.slider__text {
+  position: absolute;
+  inset: 0;
+  z-index: 150; /* Cursor areas (z-40) se zyada rakhein */
+  transform: translateZ(100px);
+  pointer-events: none; /* Ye zaroori hai taake peeche click ho sake */
+}
+.slider__text-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s;
+  pointer-events: auto;
+}
+.slider__text-item--active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Heading Style with Clip Path */
+.text-head {
+  position: absolute;
+  top: -20px;
+  left: -30px;
+  background: #fff;
+  color: black;
+  padding: 10px 40px;
+  font-family: "Lora";
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  text-transform: uppercase;
+  clip-path: polygon(0 0, 95% 0, 100% 100%, 5% 100%);
+  transform: translateX(-50px);
+  transition: transform 0.6s ease;
+}
+.slider__text-item--active .text-head {
+  transform: translateX(0);
+}
+
+/* Info Box Style with Clip Path */
+.text-info {
+  position: absolute;
+  bottom: -20px;
+  right: -30px;
+  background: #000;
+  color: white;
+  padding: 20px 40px;
+  max-width: 400px;
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+  transform: translateX(50px);
+  transition: transform 0.6s ease;
+  /* border-right: 4px solid white; */
+}
+.slider__text-item--active .text-info {
+  transform: translateX(0);
+}
+
+/* Cursors */
+.cursor-area-left {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpolyline points='25,10 15,20 25,30' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E"),
+    auto;
+}
+.cursor-area-right {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpolyline points='15,10 25,20 15,30' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E"),
+    auto;
+}

@@ -1,360 +1,228 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio | Adan Khan</title>
-
-    <!-- Tailwind CSS CDN -->
+    <title>3D Slider Final</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- GSAP -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Lora:700|Open+Sans"
+      rel="stylesheet"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
     <!-- Lenis Smooth Scroll -->
     <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
-
-    <!-- Fonts CDNs -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet" />
-    <!-- Anton Font for Horizontal Scroll Section -->
-    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet" />
-
-    <!-- <link rel="stylesheet" href="style.css" /> -->
-         <style>
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-        .project-card {
-            transition: all 0.3s ease;
-        }
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-        .filter-btn.active {
-            background-color: #3b82f6;
-            color: white;
-        }
-    </style>
-</head>
-
-<body class="bg-gray-50">
-    <!-- Your existing content -->
-
-    <!-- navbar  -->
-    <div
-        class="fixed top-[2%] lg:w-[40%] bg-[#111111] border-2 border-white text-white rounded-lg lg:rounded-xl left-1/2 -translate-x-1/2 z-50">
-        <div class="flex justify-around items-center">
-            <span class="p-4 lg:p-5"><a href="index.html">Home</a></span>
-            <span class="p-4 lg:p-5"><a href="testimonial.html">Testimonials</a></span>
-            <span class="p-4 lg:p-5"><a href="projects.html">Projects</a></span>
-            <span class="p-4 lg:p-5"><a href="skills.html">Skills</a></span>
-            <!-- <span class="p-4 lg:p-5">text</span> -->
-        </div>
-    </div>
+    <link rel="stylesheet" href="css/menu.css" />
+    <link id="cssLink" rel="stylesheet" href="css/project.css" />
+  </head>
+  <body>
     <main data-barba="wrapper">
-        <div data-barba="container" data-barba-namespace="home" class="page-content">
-          <div class="container mx-auto px-4 py-8">
-        <!-- Header Section -->
-        <header class="mb-12 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900">My Projects</h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                A collection of my work showcasing web development, design, and creative solutions built with modern technologies.
-            </p>
-        </header>
-
-        <!-- Filter Section -->
-        <div class="mb-10">
-            <h2 class="text-xl font-semibold mb-4 text-gray-700">Filter by Category</h2>
-            <div class="flex flex-wrap gap-3">
-                <button class="filter-btn active px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 transition" data-filter="all">
-                    All Projects
-                </button>
-                <button class="filter-btn px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 transition" data-filter="web">
-                    <i class="fas fa-globe mr-2"></i>Web Development
-                </button>
-                <button class="filter-btn px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 transition" data-filter="mobile">
-                    <i class="fas fa-mobile-alt mr-2"></i>Mobile Apps
-                </button>
-                <button class="filter-btn px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 transition" data-filter="design">
-                    <i class="fas fa-paint-brush mr-2"></i>UI/UX Design
-                </button>
-                <button class="filter-btn px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 transition" data-filter="fullstack">
-                    <i class="fas fa-code mr-2"></i>Full Stack
-                </button>
+      <div
+        data-barba="container"
+        data-barba-namespace="projects"
+        class="page-content"
+      >
+        <img src="" alt="" />
+        <div
+          id="slider"
+          class="slider w-screen h-screen relative overflow-hidden"
+          style="
+            --img-prev: url(&quot;images/Projects/headphonesMain.png&quot;);
+          "
+        >
+          <aside
+            class="hidden lg:flex absolute left-10 top-0 h-full flex-col justify-center z-[100]"
+          >
+            <h1 class="2xl:text-3xl text-2xl block text-left mazius mb-8">
+              Front-End Projects
+            </h1>
+            <div class="space-y-6">
+              <button
+                class="side-link active block text-left group"
+                data-id="1"
+              >
+                <span class="text-[10px] block opacity-50">01</span>
+                <span
+                  class="text-white/40 group-[.active]:text-white uppercase tracking-tighter transition-all"
+                  >Headphones Website</span
+                >
+              </button>
+              <button class="side-link block text-left group" data-id="2">
+                <span class="text-[10px] block opacity-50">02</span>
+                <span
+                  class="text-white/40 group-[.active]:text-white uppercase tracking-tighter transition-all"
+                  >Silent Lake</span
+                >
+              </button>
+              <button class="side-link block text-left group" data-id="3">
+                <span class="text-[10px] block opacity-50">03</span>
+                <span
+                  class="text-white/40 group-[.active]:text-white uppercase tracking-tighter transition-all"
+                  >Login page Design</span
+                >
+              </button>
+              <button class="side-link block text-left group" data-id="4">
+                <span class="text-[10px] block opacity-50">04</span>
+                <span
+                  class="text-white/40 group-[.active]:text-white uppercase tracking-tighter transition-all"
+                  >Todo App</span
+                >
+              </button>
+              <!-- <h1 class="2xl:text-3xl text-2xl block text-left mazius mb-8">Full-Stack Project</h1> -->
+              <button class="side-link block text-left group" data-id="5">
+                <span class="text-[10px] block opacity-50">05</span>
+                <span
+                  class="text-white/40 group-[.active]:text-white uppercase tracking-tighter transition-all"
+                  >Star Law Firm</span
+                >
+              </button>
             </div>
+          </aside>
+
+          <div class="slider-wrapper">
+            <div
+              id="slider-content"
+              class="slider__content w-[80vw] md:w-[60vw] h-[50vh] md:h-[30vw]"
+            >
+              <div class="slider__images shadow-2xl">
+                <div
+                  class="slider__images-item slider__images-item--active"
+                  data-id="1"
+                >
+                  <img
+                    src="images/Projects/headphonesMain.png"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <div class="slider__images-item" data-id="2">
+                  <img
+                    src="images/Projects/petBotsite.png"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <div class="slider__images-item" data-id="3">
+                  <img
+                    src="images/Projects/uniqueLogin.png"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <div class="slider__images-item" data-id="4">
+                  <img
+                    src="images/Projects/TodoApp.png"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <div class="slider__images-item" data-id="5">
+                  <img
+                    src="images/Projects/LawyersWebsite.png"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+
+              <div class="slider__text">
+                <div
+                  class="slider__text-item slider__text-item--active"
+                  data-id="1"
+                >
+                  <div class="text-head">Headphones Website</div>
+                  <div class="text-info">
+                    Feel the sound. Live the vibe
+                    <br />
+
+                    <div class="text-end mt-3">
+                      <button
+                        class="view-details-btn group relative px-5 py-2.5 bg-white/5 backdrop-blur-sm border border-white/20 rounded-full overflow-hidden transition-all duration-300 hover:bg-white hover:scale-105 active:scale-95 shadow-lg"
+                      >
+                        <div
+                          class="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                        ></div>
+
+                        <span
+                          class="relative z-10 flex items-center gap-1.5 text-white group-hover:text-black font-semibold tracking-widest uppercase text-[10px]"
+                        >
+                          View Project
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-3 h-3 transform group-hover:translate-x-0.5 transition-transform"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2.5"
+                              d="M14 5l7 7m0 0l-7 7m7-7H3"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="slider__text-item" data-id="2">
+                  <div class="text-head">Bottle Website</div>
+                  <div class="text-info">Hydration meets innovation</div>
+                </div>
+                <div class="slider__text-item" data-id="3">
+                  <div class="text-head">Login Page Design</div>
+                  <div class="text-info">
+                    A unique login page Design with image slide
+                  </div>
+                </div>
+                <div class="slider__text-item" data-id="4">
+                  <div class="text-head">Todo App</div>
+                  <div class="text-info">
+                    Todo App on React Js with filter Functionality
+                  </div>
+                </div>
+                <div class="slider__text-item" data-id="5">
+                  <div class="text-head">Star Law Firm</div>
+                  <div class="text-info">
+                    Where legal expertise meets dedication, guiding you
+                    confidently through every case
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="absolute inset-0 flex z-40 pointer-events-none">
+            <div
+              id="left-area"
+              class="cursor-area-left w-1/2 h-full pointer-events-auto"
+            ></div>
+            <div
+              id="right-area"
+              class="cursor-area-right w-1/2 h-full pointer-events-auto"
+            ></div>
+          </div> -->
+
+          <div
+            class="absolute bottom-10 left-0 w-full flex justify-center items-center gap-10 z-[100]"
+          >
+            <button
+              id="prevBtn"
+              class="px-6 py-2 border border-white/20 hover:bg-white hover:text-black transition uppercase text-xs tracking-widest"
+            >
+              Prev
+            </button>
+            <div class="w-20 h-[1px] bg-white/20"></div>
+            <button
+              id="nextBtn"
+              class="px-6 py-2 border border-white/20 hover:bg-white hover:text-black transition uppercase text-xs tracking-widest"
+            >
+              Next
+            </button>
+          </div>
         </div>
-
-        <!-- Projects Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" id="projects-container">
-            <!-- Project 1 -->
-            <div class="project-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-200" data-category="web">
-                <div class="h-48 bg-gradient-to-r from-blue-500 to-indigo-600 relative overflow-hidden">
-                    <div class="absolute top-4 right-4">
-                        <span class="bg-white text-blue-600 text-xs font-semibold px-3 py-1 rounded-full">Web</span>
-                    </div>
-                    <div class="absolute bottom-4 left-4">
-                        <span class="text-white text-sm font-medium bg-black/30 px-3 py-1 rounded-full">HTML/CSS/JS</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold mb-2">E-Commerce Platform</h3>
-                    <p class="text-gray-600 mb-4">A fully responsive online store with shopping cart, product filters, and checkout system.</p>
-                    <div class="flex justify-between items-center">
-                        <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition flex items-center">
-                            View Details <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                        <div class="flex space-x-2">
-                            <a href="#" class="text-gray-500 hover:text-blue-600">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="#" class="text-gray-500 hover:text-blue-600">
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 2 -->
-            <div class="project-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-200" data-category="mobile">
-                <div class="h-48 bg-gradient-to-r from-green-500 to-emerald-600 relative overflow-hidden">
-                    <div class="absolute top-4 right-4">
-                        <span class="bg-white text-green-600 text-xs font-semibold px-3 py-1 rounded-full">Mobile</span>
-                    </div>
-                    <div class="absolute bottom-4 left-4">
-                        <span class="text-white text-sm font-medium bg-black/30 px-3 py-1 rounded-full">React Native</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold mb-2">Fitness Tracker App</h3>
-                    <p class="text-gray-600 mb-4">Mobile application for tracking workouts, nutrition, and fitness progress with charts and analytics.</p>
-                    <div class="flex justify-between items-center">
-                        <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition flex items-center">
-                            View Details <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                        <div class="flex space-x-2">
-                            <a href="#" class="text-gray-500 hover:text-blue-600">
-                                <i class="fab fa-github"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="project-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-200" data-category="fullstack">
-                <div class="h-48 bg-gradient-to-r from-purple-500 to-pink-600 relative overflow-hidden">
-                    <div class="absolute top-4 right-4">
-                        <span class="bg-white text-purple-600 text-xs font-semibold px-3 py-1 rounded-full">Full Stack</span>
-                    </div>
-                    <div class="absolute bottom-4 left-4">
-                        <span class="text-white text-sm font-medium bg-black/30 px-3 py-1 rounded-full">Node.js + React</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold mb-2">Task Management System</h3>
-                    <p class="text-gray-600 mb-4">A collaborative project management tool with real-time updates, team chat, and file sharing.</p>
-                    <div class="flex justify-between items-center">
-                        <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition flex items-center">
-                            View Details <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                        <div class="flex space-x-2">
-                            <a href="#" class="text-gray-500 hover:text-blue-600">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="#" class="text-gray-500 hover:text-blue-600">
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 4 -->
-            <div class="project-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-200" data-category="design">
-                <div class="h-48 bg-gradient-to-r from-amber-500 to-orange-600 relative overflow-hidden">
-                    <div class="absolute top-4 right-4">
-                        <span class="bg-white text-amber-600 text-xs font-semibold px-3 py-1 rounded-full">UI/UX</span>
-                    </div>
-                    <div class="absolute bottom-4 left-4">
-                        <span class="text-white text-sm font-medium bg-black/30 px-3 py-1 rounded-full">Figma + Prototyping</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold mb-2">Banking App Redesign</h3>
-                    <p class="text-gray-600 mb-4">Complete UI/UX redesign of a mobile banking application with improved user flows and accessibility.</p>
-                    <div class="flex justify-between items-center">
-                        <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition flex items-center">
-                            View Details <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                        <div class="flex space-x-2">
-                            <a href="#" class="text-gray-500 hover:text-blue-600">
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 5 -->
-            <div class="project-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-200" data-category="web">
-                <div class="h-48 bg-gradient-to-r from-cyan-500 to-blue-600 relative overflow-hidden">
-                    <div class="absolute top-4 right-4">
-                        <span class="bg-white text-cyan-600 text-xs font-semibold px-3 py-1 rounded-full">Web</span>
-                    </div>
-                    <div class="absolute bottom-4 left-4">
-                        <span class="text-white text-sm font-medium bg-black/30 px-3 py-1 rounded-full">Vue.js + Tailwind</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold mb-2">Analytics Dashboard</h3>
-                    <p class="text-gray-600 mb-4">Interactive data visualization dashboard with real-time charts, metrics, and reporting tools.</p>
-                    <div class="flex justify-between items-center">
-                        <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition flex items-center">
-                            View Details <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                        <div class="flex space-x-2">
-                            <a href="#" class="text-gray-500 hover:text-blue-600">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="#" class="text-gray-500 hover:text-blue-600">
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 6 -->
-            <div class="project-card bg-white rounded-xl shadow-md overflow-hidden border border-gray-200" data-category="fullstack">
-                <div class="h-48 bg-gradient-to-r from-red-500 to-rose-600 relative overflow-hidden">
-                    <div class="absolute top-4 right-4">
-                        <span class="bg-white text-red-600 text-xs font-semibold px-3 py-1 rounded-full">Full Stack</span>
-                    </div>
-                    <div class="absolute bottom-4 left-4">
-                        <span class="text-white text-sm font-medium bg-black/30 px-3 py-1 rounded-full">Django + PostgreSQL</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold mb-2">Content Management System</h3>
-                    <p class="text-gray-600 mb-4">Custom CMS for publishers with multi-user roles, scheduling, and advanced content editing.</p>
-                    <div class="flex justify-between items-center">
-                        <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition flex items-center">
-                            View Details <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                        <div class="flex space-x-2">
-                            <a href="#" class="text-gray-500 hover:text-blue-600">
-                                <i class="fab fa-github"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Stats Section -->
-        <div class="bg-white rounded-xl shadow p-8 mb-12">
-            <h2 class="text-2xl font-bold mb-6 text-center">Project Statistics</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-blue-600 mb-2">12</div>
-                    <div class="text-gray-600">Total Projects</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-green-600 mb-2">5</div>
-                    <div class="text-gray-600">Web Projects</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-purple-600 mb-2">3</div>
-                    <div class="text-gray-600">Mobile Apps</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-amber-600 mb-2">4</div>
-                    <div class="text-gray-600">UI/UX Designs</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CTA Section -->
-        <div class="text-center bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 md:p-12">
-            <h2 class="text-2xl md:text-3xl font-bold mb-4">Have a project in mind?</h2>
-            <p class="text-gray-600 mb-6 max-w-2xl mx-auto">I'm always open to discussing new opportunities and interesting projects. Let's create something amazing together.</p>
-            <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition shadow-md hover:shadow-lg">
-                <i class="fas fa-paper-plane mr-2"></i> Get In Touch
-            </a>
-        </div>
-
-        <!-- Footer -->
-        <footer class="mt-12 pt-8 border-t border-gray-200 text-center text-gray-600">
-            <p>Projects Portfolio • Built with <span class="text-blue-600 font-medium">Tailwind CSS</span></p>
-            <p class="mt-2 text-sm">© 2023 All rights reserved.</p>
-        </footer>
-    </div>
-
-          <h1 class="mt-[100px]">project</h1>
-
-            <!-- Black section after horizontal scroll -->
-            <!-- <div
-      class="h-screen bg-black flex items-center justify-center"
-      style="z-index: 100000"
-    >
-      <div class="text-white text-center px-4">
-        <h2 class="text-4xl font-bold mb-4">
-          Next Section After Horizontal Scroll
-        </h2>
-        <p class="text-xl">
-          Vertical scrolling continues normally after horizontal section.
-        </p>
       </div>
-    </div> -->
-            <!-- =============== cards section ===============  -->        
-        </div>
     </main>
-    <!-- ================= END CARDS SECTION ==================  -->
     <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.min.js"></script>
-    <script src="js/script.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const projectCards = document.querySelectorAll('.project-card');
-            
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Update active button
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const filterValue = this.getAttribute('data-filter');
-                    
-                    // Show/hide projects based on filter
-                    projectCards.forEach(card => {
-                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-            
-            // Add hover effects for project cards
-            projectCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.boxShadow = '';
-                });
-            });
-        });
 
-    </script>
-</body>
+    <script type="module" src="js/main.js"></script>
+  </body>
 </html>

@@ -1,0 +1,668 @@
+/* <style> */
+:root {
+  --color-black: #111;
+  --color-white: #ffffff;
+  --color-primary: #10b981;
+  --pill-left: 0;
+  --pill-right: 0;
+  --z-distance: 8.519vw;
+
+}
+
+body {
+  overflow-x: hidden;
+}
+.allura {
+  font-family: "Allura", cursive;
+}
+
+@font-face {
+  font-family: "mazius";
+  /* ../ lagane se browser css folder se bahar nikal kar font dhoondega */
+  src: url("../mazius_display/MaziusDisplay/Mazius\ Display\ Extraitalic.otf")
+    format("opentype");
+}
+
+@font-face {
+  font-family: "gilroy-bold";
+  src: url("../gilroy-bold/Gilroy-Bold.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "gilroy";
+  src: url("../gilroy-bold/Gilroy-Medium.ttf") format("opentype");
+}
+
+.mazius {
+  font-family: "mazius";
+}
+
+.gilroy-bold {
+  font-family: "gilroy-bold";
+}
+
+.gilroy {
+  font-family: "gilroy";
+}
+
+.bg-primary {
+  background-color: var(--color-primary) !important;
+}
+
+.text-primary {
+  color: var(--color-primary) !important;
+}
+
+/* Lenis Setup */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+:root {
+  --pill-left: 0px;
+  --pill-right: 0px;
+}
+
+#track3::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--pill-left);
+  right: var(--pill-right);
+  background-color: black;
+  border-radius: 50px;
+  transition: all 0.25s ease-in-out;
+  z-index: 0;
+  height: 50px;
+  border: 3px solid #fff;
+}
+
+#track3 .pill.active {
+  color: white;
+  font-weight: 600;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* Horizontal Scroll Section Styles */
+.horizontal-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.horizontal-scroller {
+  display: flex;
+  height: 100vh;
+  width: max-content;
+}
+
+.horizontal-section {
+  flex: 0 0 100vw;
+  height: 100vh;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .horizontal-container h1 {
+    font-size: 14vw;
+  }
+
+  .horizontal-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .progress-counter {
+    font-size: 8rem;
+    bottom: 1rem;
+    right: 1rem;
+    font-weight: 700;
+  }
+}
+
+.horizontal-intro,
+.horizontal-hero-img,
+.horizontal-about,
+.horizontal-banner-img,
+.horizontal-story,
+.horizontal-outro {
+  width: 90vw;
+}
+
+.horizontal-header,
+.horizontal-concept-img {
+  width: 100vw;
+}
+
+.horizontal-intro {
+  padding: 2rem;
+  background-color: #000;
+  color: #f6f6f6;
+}
+
+.horizontal-header {
+  padding: 2rem;
+  background-color: #f4d35e;
+  color: #421c06;
+}
+
+.horizontal-about {
+  padding: 4rem 3rem 1rem 2rem;
+  background-color: #f95738;
+  color: #481107;
+}
+
+.horizontal-story {
+  padding: 4rem 2rem 2rem 2rem;
+  background-color: #ee964b;
+  color: #3f170b;
+}
+
+.horizontal-outro {
+  background-color: #ebebd3;
+  color: #302418;
+  padding: 2rem;
+}
+
+.horizontal-about .row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.horizontal-about .row p {
+  width: 50%;
+  margin-bottom: 1rem;
+}
+
+.horizontal-about .row .copy {
+  flex: 3;
+}
+
+.horizontal-about .row .img {
+  flex: 3;
+  aspect-ratio: 7/5;
+  overflow: hidden;
+}
+
+.horizontal-about .row .img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Typography for horizontal section */
+.horizontal-container h1 {
+  font-family: "Anton", sans-serif;
+  font-size: 10vw;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: -2px;
+  padding-top: 0.25rem;
+}
+
+.horizontal-container h2 {
+  font-family: "Poppins", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.horizontal-container p {
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.horizontal-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Progress Counter */
+.progress-counter {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  color: white;
+  font-family: "Anton", sans-serif;
+  font-size: 3rem;
+  z-index: 100;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+/* </style> */
+
+/* collection section  */
+/* Import Google Font 'Poppins' */
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"); */
+
+/* .hero-heading{
+  opacity: 0;
+} */
+
+/* style.css mein yeh add karo */
+/* .hero-heading.initial-hide {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.hero-heading.animate-ready {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.hero-heading span {
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.hero-heading.animate-ready span {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+} */
+
+/* Home page headings initial state */
+.hero-heading {
+  visibility: hidden; /* Sirf visibility hide karein */
+}
+
+/* SVG signature initial state */
+#svgGroup path {
+  visibility: hidden;
+}
+
+/* Horizontal scroll elements */
+.horizontal-container {
+  visibility: hidden;
+}
+
+/* nav css  */
+/* @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700'); */
+
+h1 {
+  margin: 0;
+}
+
+/* Replacing @mixin tr */
+
+
+
+/* skills css  */
+#simulation-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+#physics-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#eyes {
+  --size: clamp(64px, 30vi, 256px);
+  block-size: var(--size);
+  inline-size: var(--size);
+}
+
+/* Loading Animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+
+#simulation-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #fdfdfd;
+}
+
+/* Canvas ko absolute kiya taaki text upar aa sake */
+#physics-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.content-overlay {
+  position: absolute;
+  top: 50%; /* 20% se 50% kiya taaki center mein dikhe */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  /* z-index: 10; */
+  pointer-events: none;
+  width: 100%;
+}
+
+.header-container {
+  overflow: hidden; 
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 10vw, 7rem);
+  font-weight: 900;
+  margin: 0;
+  color: #111;
+  text-transform: uppercase;
+  line-height: 0.9;
+  /* Start hidden to prevent flash */
+  opacity: 0; 
+}
+
+.char {
+  display: inline-block;
+  will-change: transform;
+}
+
+.hero-para-skill {
+  font-size: clamp(0.9rem, 3vw, 1.4rem);
+  color: #444;
+  margin-top: 15px;
+  opacity: 0;
+}
+
+
+/* testimonials css  */
+  /* Ultra Shiny Glass Card - ALWAYS SHINY */
+      .ultra-shiny-glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow:
+          0 15px 35px rgba(0, 0, 0, 0.8),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+          0 0 40px rgba(255, 255, 255, 0.05);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      /* Permanent shine effect (always visible) */
+      .ultra-shiny-glass::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          125deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.1) 50%,
+          transparent 70%
+        );
+        opacity: 0.3;
+        animation: permanentShine 3s ease-in-out infinite;
+      }
+
+      @keyframes permanentShine {
+        0%,
+        100% {
+          transform: translateX(-100%);
+        }
+        50% {
+          transform: translateX(100%);
+        }
+      }
+
+      /* Secondary shine layer */
+      .ultra-shiny-glass::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 30% 20%,
+          rgba(255, 255, 255, 0.15) 0%,
+          transparent 50%
+        );
+        opacity: 0.2;
+      }
+
+      /* HOVER EFFECT - EXTRA SHINE */
+      .ultra-shiny-glass:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        box-shadow:
+          0 25px 50px rgba(0, 0, 0, 1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+          0 0 60px rgba(255, 255, 255, 0.1),
+          0 0 20px rgba(255, 255, 255, 0.2);
+        transform: translateY(-8px) scale(1.02);
+      }
+
+      /* Extra shine effect on hover */
+      .ultra-shiny-glass:hover::before {
+        opacity: 0.5;
+        animation: hoverShine 1.5s ease-in-out infinite;
+        background: linear-gradient(
+          125deg,
+          transparent 20%,
+          rgba(255, 255, 255, 0.25) 50%,
+          transparent 80%
+        );
+      }
+
+      @keyframes hoverShine {
+        0%,
+        100% {
+          transform: translateX(-100%);
+        }
+        50% {
+          transform: translateX(100%);
+        }
+      }
+
+      .ultra-shiny-glass:hover::after {
+        opacity: 0.4;
+        background: radial-gradient(
+          circle at 70% 80%,
+          rgba(255, 255, 255, 0.25) 0%,
+          transparent 60%
+        );
+      }
+
+      /* Text colors */
+      .text-white-shiny {
+        color: rgba(255, 255, 255, 0.95);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .text-gray-shiny {
+        color: rgba(255, 255, 255, 0.8);
+        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .text-light-shiny {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Shiny divider */
+      .divider-shiny {
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+      }
+
+      /* Ultra shiny stars */
+      .star-shiny {
+        color: rgba(255, 255, 255, 0.95);
+        text-shadow:
+          0 0 10px rgba(255, 255, 255, 0.5),
+          0 0 20px rgba(255, 255, 255, 0.3),
+          0 0 30px rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .ultra-shiny-glass:hover .star-shiny {
+        text-shadow:
+          0 0 15px rgba(255, 255, 255, 0.8),
+          0 0 30px rgba(255, 255, 255, 0.5),
+          0 0 45px rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+      }
+
+      /* Profile image glow */
+      .profile-glow {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow:
+          0 0 15px rgba(255, 255, 255, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+
+      .ultra-shiny-glass:hover .profile-glow {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow:
+          0 0 25px rgba(255, 255, 255, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      }
+
+      /* Tag shine */
+      .tag-shiny {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        box-shadow:
+          0 2px 8px rgba(0, 0, 0, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .ultra-shiny-glass:hover .tag-shiny {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow:
+          0 3px 12px rgba(0, 0, 0, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+
+      /* Fade in with shine */
+      @keyframes shineFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+          filter: blur(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+          filter: blur(0);
+        }
+      }
+
+      .shine-fade-in {
+        animation: shineFadeIn 0.8s ease forwards;
+        opacity: 0;
+      }
+
+      .delay-1 {
+        animation-delay: 0.1s;
+      }
+      .delay-2 {
+        animation-delay: 0.2s;
+      }
+      .delay-3 {
+        animation-delay: 0.3s;
+      }
+      .delay-4 {
+        animation-delay: 0.4s;
+      }
+      .delay-5 {
+        animation-delay: 0.5s;
+      }
+      .delay-6 {
+        animation-delay: 0.6s;
+      }
+
+      /* Shimmering stats */
+      .stat-shiny {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stat-shiny::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+        animation: statShimmer 3s ease-in-out infinite;
+      }
+
+      @keyframes statShimmer {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 200%;
+        }
+      }
+
+
+      /* projects css  */
+      

@@ -172,41 +172,20 @@ export function homeInit() {
 export function homeDestroy() {
   console.log("🧹 Home page cleanup");
 
-  // Clean up event listeners
-  const pills = document.querySelectorAll("#track3 .pill");
-  pills.forEach((pill) => {
-    pill.removeEventListener("click", window.homeHandlers?.handlePillClick);
-  });
+  // ... (apka baki cleanup code)
 
-  // Kill GSAP animations
+  // --- FIX: Kill GSAP animations ---
   gsap.killTweensOf(".hero-heading span");
   gsap.killTweensOf("#svgGroup path");
   gsap.killTweensOf(".horizontal-scroller");
-
-  // Kill ScrollTriggers
-  ScrollTrigger.getAll().forEach((st) => {
-    if (st.trigger === document.querySelector(".horizontal-container")) {
-      st.kill();
-    }
-  });
-
-  // Reset counter
-  const counter = document.getElementById("counter");
-  if (counter) counter.textContent = "0";
-
-  // Reset visibility
-  const headings = document.querySelectorAll(".hero-heading");
-  gsap.set(headings, { autoAlpha: 0 });
-
-  const svgPath = document.querySelector("#svgGroup path");
-  if (svgPath) {
-    gsap.set(svgPath, { autoAlpha: 0 });
+  
+  // FIX: Reset horizontal scroller position to start
+  const scroller = document.querySelector(".horizontal-scroller");
+  if (scroller) {
+    gsap.set(scroller, { x: 0 }); // <--- YE LINE ADD KAREIN
   }
 
-  const horizontalContainer = document.querySelector(".horizontal-container");
-  if (horizontalContainer) {
-    gsap.set(horizontalContainer, { autoAlpha: 0 });
-  }
+  // ... (apka baki cleanup code)
 
   console.log("✅ Home page cleaned up");
 }
